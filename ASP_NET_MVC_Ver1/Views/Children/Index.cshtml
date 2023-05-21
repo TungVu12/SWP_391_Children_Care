@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Children>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
+
+<div class="container shadow p-5">
+
+
+    <div class="col mb-3">
+        <a asp-controller="Children" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm mới bé</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Tên bé</th>
+                <th scope="col">Tuổi bé</th>
+                <th scope="col">Sinh nhật bé</th>
+                <th scope="col">Địa chỉ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20%">
+                        @item.FirstName @item.LastName
+                    </td>
+                    <td width="20%">
+                        @item.Age
+                    </td>
+                    <td width="25%">
+                        @item.BirdthDate
+                    </td>
+                    <td width="20%">
+                        @item.Address
+                    </td>
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Children" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                            <a asp-controller="Children" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

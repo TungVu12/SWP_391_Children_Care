@@ -1,0 +1,57 @@
+﻿@model Children
+
+<div class="container shadow p-5">
+    <div class="row pb-2">
+        <h2>Xoá thông tin bé</h2>
+    </div>
+
+    <form method="post" asp-action="DeleteEmp">
+        <input asp-for="Id" hidden />
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="FirstName">Họ và tên đệm</label>
+                <input type="text" class="form-control mb-3" asp-for="FirstName" placeholder="Nhập họ và tên đệm">
+                <span asp-validation-for="FirstName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="LastName">Tên bé</label>
+                <input type="text" class="form-control mb-3" asp-for="LastName" placeholder="Nhập tên bé">
+                <span asp-validation-for="LastName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Age">Tuổi</label>
+                <input type="text" class="form-control mb-3" asp-for="Age" placeholder="Nhập tuổi">
+                <span asp-validation-for="Age" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+                <label asp-for="BirdthDate">Sinh nhật bé</label>
+                <input type="datetime-local" class="form-control" asp-for="BirdthDate">
+                <span asp-validation-for="BirdthDate" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Address">Địa chỉ</label>
+                <input type="text" class="form-control mb-3" asp-for="Address" placeholder="Nhập địa chỉ">
+                <span asp-validation-for="Address" class=" alert-danger"></span>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-lg btn-danger p-2"><i class="bi bi-trash-fill"></i>Xoá</button>
+        <a asp-controller="Children" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở về</a>
+    </form>
+
+</div>
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
