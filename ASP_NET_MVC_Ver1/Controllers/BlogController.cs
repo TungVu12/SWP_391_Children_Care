@@ -9,14 +9,11 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View();
         }
 
-        //public IActionResult Blogs()
-        //{
-        //    return View();
-        //}
-
         public IActionResult BlogsMXH()
         {
             return View();
         }
+
+
     }
 }
