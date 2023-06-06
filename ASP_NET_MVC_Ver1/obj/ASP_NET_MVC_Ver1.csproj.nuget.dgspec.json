@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\THEND\\Desktop\\Test\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj": {}
+    "D:\\SWP391\\git\\SWP_391_Children_Care\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\THEND\\Desktop\\Test\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj": {
+    "D:\\SWP391\\git\\SWP_391_Children_Care\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\THEND\\Desktop\\Test\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj",
+        "projectUniqueName": "D:\\SWP391\\git\\SWP_391_Children_Care\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj",
         "projectName": "ASP_NET_MVC_Ver1",
-        "projectPath": "C:\\Users\\THEND\\Desktop\\Test\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj",
-        "packagesPath": "C:\\Users\\THEND\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\THEND\\Desktop\\Test\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1\\obj\\",
+        "projectPath": "D:\\SWP391\\git\\SWP_391_Children_Care\\ASP_NET_MVC_Ver1\\ASP_NET_MVC_Ver1.csproj",
+        "packagesPath": "C:\\Users\\HLC_2021\\.nuget\\packages\\",
+        "outputPath": "D:\\SWP391\\git\\SWP_391_Children_Care\\ASP_NET_MVC_Ver1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\THEND\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HLC_2021\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

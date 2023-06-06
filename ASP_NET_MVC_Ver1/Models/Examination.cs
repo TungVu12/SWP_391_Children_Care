@@ -8,6 +8,13 @@ namespace ASP_NET_MVC_Ver1.Models
         public int Id { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string ChilderName { get; set; }
+
+        public int parent_id { get; set; }
+        public int doctor_id { get; set; }
+        public int child_id { get; set; }
+        public int reservation_id { get; set; }
+
+
         public string ParentName { get; set; }
         public string Sex { get; set; }
 
