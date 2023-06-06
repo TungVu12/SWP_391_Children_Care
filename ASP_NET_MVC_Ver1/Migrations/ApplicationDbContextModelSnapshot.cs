@@ -101,6 +101,30 @@ namespace ASP_NET_MVC_Ver1.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ASP_NET_MVC_Ver1.Models.Category", b =>
+                {
+                    b.Property<int>("c_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("c_id"), 1L, 1);
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("creator_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("c_id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ASP_NET_MVC_Ver1.Models.Children", b =>
                 {
                     b.Property<int>("Id")
@@ -130,9 +154,128 @@ namespace ASP_NET_MVC_Ver1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("parent_id")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Childrens");
+                });
+
+            modelBuilder.Entity("ASP_NET_MVC_Ver1.Models.Examination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChilderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DoctorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("child_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("doctor_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("parent_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("reservation_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Examination");
+                });
+
+            modelBuilder.Entity("ASP_NET_MVC_Ver1.Models.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"), 1L, 1);
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PostId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("ASP_NET_MVC_Ver1.Models.Reservation", b =>
+                {
+                    b.Property<int>("r_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("r_id"), 1L, 1);
+
+                    b.Property<DateTime>("create_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("r_content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("r_title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("u_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("r_id");
+
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

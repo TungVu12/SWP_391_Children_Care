@@ -18,5 +18,10 @@ namespace ASP_NET_MVC_Ver1.Models
         public int Age { get; set; }
         public string? Description { get; set; }
         public string Address { get; set; }
+        [Required]
+
+        public int parent_id { get; set; }
+
+
     }
 }
