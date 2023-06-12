@@ -15,6 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Children> Childrens { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Examination> Examination { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Category> Categories { get; set; }

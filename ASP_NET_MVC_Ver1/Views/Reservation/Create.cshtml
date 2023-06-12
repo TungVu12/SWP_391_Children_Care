@@ -1,0 +1,54 @@
+﻿@model Reservation
+
+<div class="container shadow p-5">
+    <div class="row pb-2">
+        <h2>Đặt lịch hẹn khám</h2>
+    </div>
+
+    <form method="post">
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="u_id">u_id</label>
+                <input type="text" class="form-control mb-3" asp-for="u_id" placeholder=@ViewBag.user_id disabled>
+            </div>
+            <div>
+                @*<select name="products" class="form-control" asp-items=(List<String>)ViewBag.child_info></select>*@
+
+                @foreach (Children child in (List<Children>)ViewBag.child_info)
+                {
+                    <select class="form-control" asp-items="@ViewBag.child_info">
+                    </select>
+                }
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="u_id">Email bố mẹ</label>
+                <input type="text" class="form-control mb-3" @*asp-for="u_id"*@ placeholder=@ViewBag.user_name disabled>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="r_title">Bệnh cần khám</label>
+                <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám">
+                <span asp-validation-for="r_title" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="r_content">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
+                <span asp-validation-for="r_content" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
+        <a asp-controller="Reservation" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+    </form>
+
+</div>
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

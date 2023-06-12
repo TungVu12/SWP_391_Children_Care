@@ -20,8 +20,18 @@ namespace ASP_NET_MVC_Ver1.Models
         public string Address { get; set; }
         [Required]
 
-        public int parent_id { get; set; }
+        public string parent_id { get; set; }
 
-
+        public Children(int id, string firstName, string lastName, DateTime? birdthDate, int age, string? description, string address, string parent_id)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            BirdthDate = birdthDate;
+            Age = age;
+            Description = description;
+            Address = address;
+            this.parent_id = parent_id;
+        }
     }
 }

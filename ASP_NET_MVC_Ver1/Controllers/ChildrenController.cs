@@ -2,6 +2,7 @@
 using ASP_NET_MVC_Ver1.Enum;
 using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP_NET_MVC_Ver1.Controllers
@@ -10,9 +11,10 @@ namespace ASP_NET_MVC_Ver1.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-
-        public ChildrenController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _uid;
+        public ChildrenController(ApplicationDbContext context, UserManager<ApplicationUser> uid)
         {
+            _uid = uid;
             _context = context;
         }
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
@@ -24,6 +26,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult Create()
         {
+            ViewBag.user_id = _uid.GetUserId(HttpContext.User);
             return View();
         }
 
