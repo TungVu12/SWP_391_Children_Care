@@ -11,5 +11,7 @@ namespace ASP_NET_MVC_Ver1.Models
         [Required]
         public string Description { get; set; }
         public int CreatorId { get; set; }
+        [MaxLength(500)]
+        public string Image { get; set; }
     }
 }
