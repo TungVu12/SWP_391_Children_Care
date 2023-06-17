@@ -1,0 +1,46 @@
+﻿@model Category
+
+<div class="container shadow p-5">
+    <div class="row pb-2">
+        <h2>Sửa Category</h2>
+    </div>
+
+    <form method="post" asp-action="Edit">
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="c_id">Id</label>
+                <input type="text" class="form-control mb-3" asp-for="c_id">
+                <span asp-validation-for="c_id" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="creator_id">Id người tạo</label>
+                <input type="text" class="form-control mb-3" asp-for="creator_id">
+                <span asp-validation-for="creator_id" class=" alert-danger"></span>
+            </div>      
+            <div class="form-group col-md-6">
+                <label asp-for="title">Title</label>
+                <input type="text" class="form-control mb-3" asp-for="title">
+                <span asp-validation-for="title" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="content">Conent</label>
+                <input type="text" class="form-control mb-3" asp-for="content">
+                <span asp-validation-for="content" class=" alert-danger"></span>
+            </div>            
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Cập nhập</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+    </form>
+
+</div>
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
