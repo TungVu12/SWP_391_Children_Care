@@ -9,7 +9,7 @@ namespace ASP_NET_MVC_Ver1.Models
         [Key]
         public int c_id { get; set; }
         [Required]
-        public int creator_id { get; set; }
+        public string creator_id { get; set; }
         [Required]
         public string title { get; set; }
         [Required]

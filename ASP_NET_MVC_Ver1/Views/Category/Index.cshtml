@@ -1,8 +1,53 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Category>
+
 @{
+    ViewData["Title"] = "Index";
 }
-<div>
-    đây là index của category
+
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
+
+<div class="container shadow p-5">
+
+
+    <div class="col mb-3">
+        <a asp-controller="Category" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Add Category</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col" width="120px" style="text-align: center">C_Id</th>
+                <th scope="col" width="120px" style="text-align: center">Creator_Id</th>
+                <th scope="col" width="120px" style="text-align: center">Category</th>
+                <th scope="col" width="100px" style="text-align: center">Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20px">
+                        @item.c_id
+                    </td>
+                    <td width="20px">
+                        @item.creator_id
+                    </td>
+                    <td width="20px">
+                        @item.title
+                    </td>
+                    <td width="20px">
+                        @item.content
+                    </td>                    
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.c_id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.c_id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
