@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Examination>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
+
+<div class="container shadow p-5">
+
+
+@*    <div class="col mb-3">
+        <a asp-controller="Examination" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm mới hồ sơ bệnh án</a>
+    </div>*@
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col" width="120px" style="text-align: center">Ngày đăng ký</th>
+                <th scope="col" width="100px" style="text-align: center">Tên bé</th>
+                <th scope="col" width="100px" style="text-align: center">Tên người giám hộ</th>
+                <th scope="col" width="100px" style="text-align: center">Điện thoại</th>
+                <th scope="col" width="100px" style="text-align: center">Giới tính</th>
+                <th scope="col" width="100px" style="text-align: center">Địa chỉ</th>
+                <th scope="col" width="300px" style="text-align: center">Nội dung bệnh án</th>
+                <th scope="col" width="100px" style="text-align: center">Tên bác sĩ chỉ định</th>
+                <th scope="col" width="100px" style="text-align: center">Tên y tá trực</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="20px">
+                        @item.RegistrationDate.ToString("dd/MM/yyyy")
+                    </td>
+                    <td width="20px">
+                        @item.ChilderName
+                    </td>
+                    <td width="20px">
+                        @item.ParentName
+                    </td>
+                    <td width="20px">
+                        @item.PhoneNumber
+                    </td>
+                    <td width="20px">
+                        @item.Sex
+                    </td>
+                    <td width="20px">
+                        @item.Address
+                    </td>
+                    <td width="200px">
+                        @item.Detail
+                    </td>
+                    <td width="20px">
+                        @item.DoctorName
+                    </td>
+                    <td width="20px">
+                        @item.NurseName
+                    </td>
+                    <td>
+                        <div role="group" class="w-60 btn-group">
+                            <a asp-controller="Nurse" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                            <a asp-controller="Nurse" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
