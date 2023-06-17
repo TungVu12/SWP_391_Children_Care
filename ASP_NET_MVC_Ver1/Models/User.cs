@@ -4,8 +4,8 @@ namespace ASP_NET_MVC_Ver1.Models
 {
     public class User
     {
-        [Required]   
-        public int Id { get; set; }
+        [Required]
+        public Guid Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -17,7 +17,7 @@ namespace ASP_NET_MVC_Ver1.Models
         [Required]
         public string Password { get; set; }
         public string? PhoneNumber { get; set; }
-            
-           
+
+
     }
 }

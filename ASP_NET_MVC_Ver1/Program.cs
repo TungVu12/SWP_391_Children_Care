@@ -10,10 +10,12 @@ public class Program
     {
 
     var builder = WebApplication.CreateBuilder(args);
-    var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+    var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnectionMySQL") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnectionMySQL' not found.");
 
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(connectionString));
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        });
 
         builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
              .AddRoles<IdentityRole>()
