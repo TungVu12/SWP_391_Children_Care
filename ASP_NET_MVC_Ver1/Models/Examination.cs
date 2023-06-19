@@ -27,6 +27,5 @@ namespace ASP_NET_MVC_Ver1.Models
         public int DoctorId { get; set; }
 
         public string DoctorName { get; set; }
-        public string NurseName { get; set; }
     }
 }
