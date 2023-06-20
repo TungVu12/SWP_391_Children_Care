@@ -11,6 +11,10 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
+                <label asp-for="parent_id">Tên phụ huynh</label>
+                <input type="text" class="form-control mb-3" asp-for="parent_id" placeholder=@ViewBag.user_id readonly="true" value=@ViewBag.user_id>
+            </div>
+            <div class="form-group col-md-6">
                 <label asp-for="parent_id">Id của bố mẹ</label>
                 <input type="text" class="form-control mb-3" asp-for="parent_id" placeholder=@ViewBag.user_id value='@ViewBag.user_id' readonly="true">
             </div>
