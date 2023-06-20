@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using ASP_NET_MVC_Ver1.Areas.Identity.Data;
+@using ASP_NET_MVC_Ver1.Enum;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var isAdmin = false;
+    var isDoctor = false;
+    var isParent = false;
+    if (user != null)
+    {
+        isAdmin = await UserManager.IsInRoleAsync(user, Roles.Admin.ToString());
+        isDoctor = await UserManager.IsInRoleAsync(user, Roles.Doctor.ToString());
+        isParent = await UserManager.IsInRoleAsync(user, Roles.Parent.ToString());
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -50,6 +66,10 @@
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <div class="navbar-nav ms-auto py-0">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                @if (isAdmin || isDoctor || isParent)
+                                {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Index">Reservation</a>
+                                }
                                 <a class="nav-item nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="BlogsMXH">Blog</a>
                             <partial name="_LoginPartial" />

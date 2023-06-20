@@ -17,7 +17,7 @@ public class Program
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         });
 
-        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
              .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
              .AddDefaultUI()
