@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Post>
+﻿@model Post
 <form method="post" asp-action="BlogDetail">
     <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
@@ -9,26 +9,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @*<div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <a href="price.html" class="nav-item nav-link">Pricing</a>
-                <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu m-0">
-                <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                <a href="detail.html" class="dropdown-item active">Blog Detail</a>
-                <a href="team.html" class="dropdown-item">The Team</a>
-                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                <a href="appointment.html" class="dropdown-item">Appointment</a>
-                <a href="search.html" class="dropdown-item">Search</a>
-                </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                </div>*@
+                
             </nav>
         </div>
     </div>
@@ -36,18 +17,27 @@
         <div class="row g-5">
             <div class="col-lg-8">
                 <div class="mb-5">
-                    @foreach (var item in Model)
-                    {
-                        <div class="bg-light rounded overflow-hidden">
-                            @if (item.Image != null)
-                            {
-                                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(item.Image))">
+                        <div class="form-row">
+                       
+                            @if(Model.Image != null){
+                                <img class="img-fluid w-100 rounded mb-5" src="data:image/*;base64,@(Convert.ToBase64String(Model.Image))" alt="">
                             }
+                        <img style="width:auto;height:auto; border-radius:30px" />
+
+                            <div class="form-group col-md-6">
+                                <h3>
+                                @Model.Title
+                                </h3>
+                                <span asp-validation-for="Title" class=" alert-danger"></span>
+                            </div>
+                            <p>@Model.Description</p>
+                        <span>@Model.CreateDate.ToString("dd/MM/yyyy")</span>
+                            
                         </div>
-                        <h1 class="mb-4">@item.Title</h1>
-                        <p>
-                            @item.Description
-                        </p>
+                    <a asp-controller="Blog" asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm mới một Blog</a>
+                    <a asp-controller="Blog" asp-action="Edit" asp-route-id="@Model.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                    <a asp-controller="Blog" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                       
                         <div class="d-flex justify-content-between bg-light rounded p-4 mt-4 mb-4">
                             <div class="d-flex align-items-center">
                                 <img class="rounded-circle me-2" src="~/img/user.jpg" width="40" height="40" alt="">
@@ -58,13 +48,11 @@
                                 <span class="ms-3"><i class="far fa-comment text-primary me-1"></i>123</span>
                             </div>
                         </div>
-                    }
-
                 </div>
                 <div class="mb-5">
                     <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">3 Comments</h4>
                     <div class="d-flex mb-4">
-                        <img src="img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
+                        <img src="~/img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
                         <div class="ps-3">
                             <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
                             <p>
@@ -75,7 +63,7 @@
                         </div>
                     </div>
                     <div class="d-flex mb-4">
-                        <img src="img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
+                        <img src="~/img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
                         <div class="ps-3">
                             <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
                             <p>
@@ -86,7 +74,7 @@
                         </div>
                     </div>
                     <div class="d-flex ms-5 mb-4">
-                        <img src="img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
+                        <img src="~/img/user.jpg" class="img-fluid rounded-circle" style="width: 45px; height: 45px;">
                         <div class="ps-3">
                             <h6><a href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
                             <p>
@@ -128,16 +116,6 @@
                         <button class="btn btn-primary px-3"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
-               @* <div class="mb-5">
-                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">Categories</h4>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="h5 bg-light rounded py-2 px-3 mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Web Design</a>
-                        <a class="h5 bg-light rounded py-2 px-3 mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Web Development</a>
-                        <a class="h5 bg-light rounded py-2 px-3 mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Web Development</a>
-                        <a class="h5 bg-light rounded py-2 px-3 mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Keyword Research</a>
-                        <a class="h5 bg-light rounded py-2 px-3 mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Email Marketing</a>
-                    </div>
-                </div>*@
                 <div class="mb-5">
                     <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 mb-4">Recent Post</h4>
                     <div class="d-flex rounded overflow-hidden mb-3">

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="text-center mx-auto mb-5" style="max-width: 500px;">
             <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Blog Post</h5>
-            <h1 class="display-4">Our Latest Medical Blog Posts</h1>
+            <h1 class="display-4">Our Latest ChildrenCare Blog Posts</h1>
         </div>
         <div class="row g-5">
             @foreach (var item in Model)
@@ -13,16 +13,12 @@
                     <div class="bg-light rounded overflow-hidden">
                         @if (item.Image != null)
                         {
-                            <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(item.Image))">
+                            <img style="width:100px;height:100px; object-fit:cover; border-radius:10px" src="data:image/*;base64,@(Convert.ToBase64String(item.Image))">
                         }
                     </div>
                     <div class="p-4">
-                        @*<a class="h3 d-block mb-3" asp-controller="Blog" asp-action="Details" asp-route-id="@item.PostId">@item.Title</a>*@
                         <a class="h3 d-block mb-3" asp-controller="Blog" asp-action="BlogDetail" asp-route-id="@item.Id">@item.Title</a>
                     </div>
-                    <p class="m-0">
-                       @item.Description
-                    </p>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
                             <img class="rounded-circle me-2" src="~/img/user.jpg" width="25" height="25" alt="">
