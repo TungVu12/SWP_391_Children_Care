@@ -69,7 +69,7 @@ namespace ASP_NET_MVC_Ver1.Areas.Identity.Data
                     await userManager.SetUserNameAsync(defaultUser, defaultUser.Email);
                     await userManager.SetEmailAsync(defaultUser, defaultUser.Email);
 
-                    var result = await userManager.CreateAsync(defaultUser, "admin123@Aa");
+                    var result = await userManager.CreateAsync(defaultUser, "c");
                     await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Manager.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Doctor.ToString());
