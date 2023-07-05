@@ -45,9 +45,9 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View(empobj);
         }
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
-        public IActionResult Edit(int? Id)
+        public IActionResult Edit(Guid Id)
         {
-            if (Id == null || Id == 0)
+            if (Id == null)
             {
                 return NotFound();
             }
@@ -74,13 +74,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
             }
             return View(empobj);
         }
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Guid Id)
         {
-            if (id == null || id == 0)
+            if (Id == null)
             {
                 return NotFound();
             }
-            var empfromdb = _context.Categories.Find(id);
+            var empfromdb = _context.Categories.Find(Id);
 
             if (empfromdb == null)
             {
@@ -92,9 +92,9 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public IActionResult DeleteEmp(int? c_id)
+        public IActionResult DeleteEmp(Guid Id)
         {
-            var deleterecord = _context.Categories.Find(c_id);
+            var deleterecord = _context.Categories.Find(Id);
             if (deleterecord == null)
             {
                 return NotFound();
