@@ -59,6 +59,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
         public async Task<IActionResult> Create()
         {
+            //test
             //IEnumerable<User> parents = _context.Users;
             if (isAdmin || isDoctor)
             {
