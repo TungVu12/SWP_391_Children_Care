@@ -29,21 +29,21 @@
             {
                 <tr>
                     <td width="20px">
-                        @item.c_id
+                        @item.Id
                     </td>
                     <td width="20px">
-                        @item.creator_id
+                        @item.CreateId
                     </td>
                     <td width="20px">
-                        @item.title
+                        @item.Title
                     </td>
                     <td width="20px">
-                        @item.content
+                        @item.Content
                     </td>                    
                     <td>
                         <div role="group" class="w-60 btn-group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.c_id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.c_id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
                         </div>
                     </td>
                 </tr>

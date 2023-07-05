@@ -21,6 +21,8 @@ namespace ASP_NET_MVC_Ver1.Enum
         [Display(Name = "Lịch hẹn bị từ chối")]
         Rejected,
         [Display(Name = "Đã xác nhận hẹn lịch")]
-        Approved
+        Approved,
+        [Display(Name = "Huỷ lịch")]
+        Cancelled
     }
 }
