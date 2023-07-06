@@ -1,5 +1,7 @@
 ﻿@model Children
-
+@{
+    string maxDate = DateTime.Now.ToString("yyyy-MM-dd");
+}
 
 <div class="container shadow p-5">
     <div class="row pb-2">
@@ -10,36 +12,37 @@
         <div asp-validation-summary="All"></div>
 
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="parent_id">Tên phụ huynh</label>
-                <input type="text" class="form-control mb-3" asp-for="parent_id" placeholder=@ViewBag.user_id readonly="true" value=@ViewBag.user_id>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="parent_id">Id của bố mẹ</label>
-                <input type="text" class="form-control mb-3" asp-for="parent_id" placeholder=@ViewBag.user_id value='@ViewBag.user_id' readonly="true">
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="FirstName">Họ và tên đệm</label>
-                <input type="text" class="form-control mb-3" asp-for="FirstName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="FirstName" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="LastName">Tên bé</label>
-                <input type="text" class="form-control mb-3" asp-for="LastName" placeholder="Nhập tên bé">
-                <span asp-validation-for="LastName" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Age">Tuổi</label>
-                <input type="text" class="form-control mb-3" asp-for="Age" placeholder="Nhập tuổi">
-                <span asp-validation-for="Age" class=" alert-danger"></span>
-            </div>
-        </div>
+            @if (ViewBag.Admin || ViewBag.Doctor)
+            {
 
-        <div class="form-row">
+                <div class="form-group  col-md-6">
+                    @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"), htmlAttributes: new { @class = "form-control col-md-2" })
+                    </div>
+                </div>
+            }
+            else
+            {
+                <label asp-for="parent_id">Tên phụ huynh bé</label>
+                <input type="text" class="form-control mb-3" asp-for="parent_id" readonly="true" value=@ViewBag.parentName>
+            }
+            <div class="form-group col-md-6">
+                <label asp-for="FullName">Họ và tên</label>
+                <input type="text" class="form-control mb-3" asp-for="FullName" placeholder="Nhập họ và tên">
+                <span asp-validation-for="FullName" class=" alert-danger"></span>
+            </div>
             <div class="form-group col-md-6 mb-3">
                 <label asp-for="BirdthDate">Sinh nhật bé</label>
-                <input type="datetime-local" class="form-control" asp-for="BirdthDate">
+                <input type="date" class="form-control datepicker" asp-for="BirdthDate" id="birthDateInput" max="@maxDate" asp-format="{0:yyyy-MM-dd}">
                 <span asp-validation-for="BirdthDate" class=" alert-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Age">Tuổi</label>
+                <input type="text" class="form-control mb-3" asp-for="Age" placeholder="Nhập tuổi" readonly="true" id="calAge">
+                <span asp-validation-for="Age" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Address">Địa chỉ</label>
@@ -57,9 +60,47 @@
 
 
 @*//for front end validations*@
+<script>
 
+    // Gắn sự kiện "change" vào trường input
+    document.getElementById("birthDateInput").addEventListener("change", function () {
+        // Gọi hàm xử lý khi có sự thay đổi giá trị
+        handleBirthDateChange();
+    });
+
+    // Hàm xử lý khi có sự thay đổi giá trị
+    function handleBirthDateChange() {
+        // Lấy giá trị mới của trường input
+        var birthDate = document.getElementById("birthDateInput").value;
+        var dateOfBirth = new Date(birthDate);
+
+        // Lấy ngày hiện tại
+        var currentDate = new Date();
+
+        // Tính số tuổi
+        var age = currentDate.getFullYear() - dateOfBirth.getFullYear();
+        var currentMonth = currentDate.getMonth();
+        var birthMonth = dateOfBirth.getMonth();
+        if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDate.getDate() < dateOfBirth.getDate())) {
+            age--;
+        }
+        document.getElementById("calAge").value = age;
+        // Thực hiện các xử lý tương ứng với giá trị birthDate
+        // ...
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'vi',
+                autoclose: true
+            });
+        });
+    }
+
+</script>
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
 }
+

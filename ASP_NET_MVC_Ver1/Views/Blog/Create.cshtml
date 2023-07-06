@@ -18,14 +18,8 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label asp-for="Description">Thông tin</label>
-                    <input type="text" class="form-control mb-3" asp-for="Description" placeholder="Nhập thông tin">
-                    <span asp-validation-for="Description" class=" alert-danger"></span>
+                    @Html.TextAreaFor(model => model.Description)
                 </div>
-               @* <div class="form-group col-md-6">
-                    <label asp-for="CreatorId">ID người tạo</label>
-                    <input type="text" class="form-control mb-3" asp-for="CreatorId" placeholder="Nhập Id người tạo">
-                    <span asp-validation-for="CreatorId" class=" alert-danger"></span>
-                </div>*@
             </div>
             <div class="col-md-6">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -51,12 +45,9 @@
 
         </div>
         <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Thêm Blog</button>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+        <a asp-controller="Blog" asp-action="BlogDetail" class="btn btn-lg btn-warning p-2">Trở lại</a>
     </form>
 </div>
-
-
-@*//for front end validations*@
 
 @section Scripts{
     @{
