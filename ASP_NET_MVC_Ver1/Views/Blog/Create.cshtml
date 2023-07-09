@@ -16,9 +16,9 @@
                     <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Nhập title">
                     <span asp-validation-for="Title" class=" alert-danger"></span>
                 </div>
+                <label asp-for="Description">Thông tin</label>
                 <div class="form-group col-md-6">
-                    <label asp-for="Description">Thông tin</label>
-                    @Html.TextAreaFor(model => model.Description)
+                    @Html.TextAreaFor(model => model.Description, new { style = "width: 206px; height: 286px;" })
                 </div>
             </div>
             <div class="col-md-6">
@@ -45,7 +45,7 @@
 
         </div>
         <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Thêm Blog</button>
-        <a asp-controller="Blog" asp-action="BlogDetail" class="btn btn-lg btn-warning p-2">Trở lại</a>
+        <a asp-controller="Blog" asp-action="BlogsMXH" class="btn btn-lg btn-warning p-2">Trở lại</a>
     </form>
 </div>
 

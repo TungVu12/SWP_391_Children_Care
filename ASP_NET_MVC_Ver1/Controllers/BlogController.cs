@@ -33,9 +33,9 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public IActionResult BlogDetail(int? Id)
+        public IActionResult BlogDetail(Guid? Id)
         {
-            if (Id == null || Id == 0)
+            if (Id == null )
             {
                 return NotFound();
             }
@@ -82,9 +82,9 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid?id)
         {
-            if (id == null || id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -138,9 +138,9 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Guid? id)
         {
-            if (id == null || id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -156,8 +156,12 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult DeleteEmp(int? id)
+        public IActionResult DeleteEmp(Guid? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var deleterecord = _context.Posts.Find(id);
             if (deleterecord == null)
             {
