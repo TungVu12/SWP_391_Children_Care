@@ -11,18 +11,18 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="title">Title</label>
-                <input type="text" class="form-control mb-3" asp-for="title" placeholder="Title">
-                <span asp-validation-for="title" class=" alert-danger"></span>
+                <label asp-for="Title">Khoa khám</label>
+                <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Title">
+                <span asp-validation-for="Title" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="content">Content</label>
-                <input type="text" class="form-control mb-3" asp-for="content" placeholder="Content">
-                <span asp-validation-for="content" class=" alert-danger"></span>
+                <label asp-for="Content">Thông tin chi tiết</label>
+                <input type="text" class="form-control mb-3" asp-for="Content" placeholder="Content">
+                <span asp-validation-for="Content" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="creator_id">ID người tạo</label>
-                <input type="text" class="form-control mb-3" asp-for="creator_id" value="@ViewBag.UserId">
+                <label asp-for="Creator">ID người tạo</label>
+                <input type="text" class="form-control mb-3" asp-for="Creator" value="@ViewBag.UserId" readonly>
                 @*@ViewBag.UserId*@
             </div>
         </div>
