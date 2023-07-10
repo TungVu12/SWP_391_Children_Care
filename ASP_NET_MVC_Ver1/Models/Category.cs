@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
-using static System.Formats.Asn1.AsnWriter;
 
 
 namespace ASP_NET_MVC_Ver1.Models
@@ -8,12 +7,13 @@ namespace ASP_NET_MVC_Ver1.Models
     public class Category
     {
         [Key]
-        public Guid Id { get; set; }
+        public int c_id { get; set; }
         [Required]
-        public string Creator { get; set; }
+        public string creator_id { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string title { get; set; }
         [Required]
-        public string Content { get; set; }
+        public string content { get; set; }
+
     }
 }

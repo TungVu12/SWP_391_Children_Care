@@ -13,15 +13,15 @@
 
 
     <div class="col mb-3">
-        <a asp-controller="Category" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm khoa khám</a>
+        <a asp-controller="Category" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Add Category</a>
     </div>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="col" width="120px" style="text-align: center">Id</th>
-                <th scope="col" width="120px" style="text-align: center">Id người tạo</th>
-                <th scope="col" width="120px" style="text-align: center">Các khoa khám</th>
-                <th scope="col" width="100px" style="text-align: center">Thông tin chi tiết</th>
+                <th scope="col" width="120px" style="text-align: center">C_Id</th>
+                <th scope="col" width="120px" style="text-align: center">Creator_Id</th>
+                <th scope="col" width="120px" style="text-align: center">Category</th>
+                <th scope="col" width="100px" style="text-align: center">Detail</th>
             </tr>
         </thead>
         <tbody>
@@ -29,21 +29,21 @@
             {
                 <tr>
                     <td width="20px">
-                        @item.Id
+                        @item.c_id
                     </td>
                     <td width="20px">
-                        @item.Creator
+                        @item.creator_id
                     </td>
                     <td width="20px">
-                        @item.Title
+                        @item.title
                     </td>
                     <td width="20px">
-                        @item.Content
-                    </td>
+                        @item.content
+                    </td>                    
                     <td>
                         <div role="group" class="w-60 btn-group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.c_id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.c_id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
                         </div>
                     </td>
                 </tr>

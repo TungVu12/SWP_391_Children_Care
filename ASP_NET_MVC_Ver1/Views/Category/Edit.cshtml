@@ -10,25 +10,25 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="Id">Id</label>
-                <input type="text" class="form-control mb-3" asp-for="Id" readonly>
-                <span asp-validation-for="Id" class=" alert-danger"></span>
+                <label asp-for="c_id">Id</label>
+                <input type="text" class="form-control mb-3" asp-for="c_id">
+                <span asp-validation-for="c_id" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Creator">Id người tạo</label>
-                <input type="text" class="form-control mb-3" asp-for="Creator" readonly>
-                <span asp-validation-for="Creator" class=" alert-danger"></span>
+                <label asp-for="creator_id">Id người tạo</label>
+                <input type="text" class="form-control mb-3" asp-for="creator_id">
+                <span asp-validation-for="creator_id" class=" alert-danger"></span>
+            </div>      
+            <div class="form-group col-md-6">
+                <label asp-for="title">Title</label>
+                <input type="text" class="form-control mb-3" asp-for="title">
+                <span asp-validation-for="title" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Title">Khoa khám</label>
-                <input type="text" class="form-control mb-3" asp-for="Title">
-                <span asp-validation-for="Title" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Content">Thông tin chi tiết</label>
-                <input type="text" class="form-control mb-3" asp-for="Content">
-                <span asp-validation-for="Content" class=" alert-danger"></span>
-            </div>
+                <label asp-for="content">Conent</label>
+                <input type="text" class="form-control mb-3" asp-for="content">
+                <span asp-validation-for="content" class=" alert-danger"></span>
+            </div>            
         </div>
         <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Cập nhập</button>
         <a asp-controller="Category" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
