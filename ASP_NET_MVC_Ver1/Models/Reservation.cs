@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ASP_NET_MVC_Ver1.Enum;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace ASP_NET_MVC_Ver1.Models
@@ -6,27 +8,37 @@ namespace ASP_NET_MVC_Ver1.Models
     public class Reservation
     {
         [Key]
-        public int r_id { get; set; }
-
+        public Guid Id { get; set; }
         [Required]
-        public int u_id { get; set; }
-
+        [Display(Name = "Bác sĩ")]
+        public string doctor_id { get; set; }
         [Required]
-        public string r_title { get; set;}
+        [Display(Name = "Trẻ em")]
+        public string child_id { get; set; }
         [Required]
-        public string r_content { get; set;}
+        [Display(Name = "Phụ huynh")]
+        public string parent_id { get; set; }
         [Required]
-        public DateTime create_date { get; set; }
+        [Display(Name = "Khoa khám")]
+        public string category { get; set; }
+        [Required]
+        [Display(Name = "Tên hồ sơ")]
+        public string r_title { get; set; }
+        [Required]
+        [Display(Name = "Thông tin khám chữa bệnh")]
+        public string r_content { get; set; }
+        public DateTime? create_date { get; set; }
+        [Required]
+        [Display(Name = "Ngày đặt lịch")]
+        public DateTime? booking_date { get; set; }
+        [Display(Name = "Ca khám bệnh")]
+        public int? slot { get; set; }
+        [Required]
+        [Display(Name = "Tình trạng đặt lịch")]
+        public StatusSending status { get; set; }
+        [Display(Name = "Thông tin mô tả")]
+        public string Desciption { get; set; }
 
-        public Reservation() { }
 
-        public Reservation(int r_id, int u_id, string r_title, string r_content, DateTime create_date)
-        {
-            this.r_id = r_id;
-            this.u_id = u_id;
-            this.r_title = r_title;
-            this.r_content = r_content;
-            this.create_date = create_date;
-        }
     }
 }

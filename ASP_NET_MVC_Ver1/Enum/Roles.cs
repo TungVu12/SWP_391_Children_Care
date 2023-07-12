@@ -14,5 +14,15 @@ namespace ASP_NET_MVC_Ver1.Enum
         Parent,
         Children
     }
-
+    public enum StatusSending
+    {
+        [Display(Name = "Chờ phê duyệt")]
+        Process,
+        [Display(Name = "Lịch hẹn bị từ chối")]
+        Rejected,
+        [Display(Name = "Đã xác nhận hẹn lịch")]
+        Approved,
+        [Display(Name = "Huỷ lịch")]
+        Cancelled
+    }
 }

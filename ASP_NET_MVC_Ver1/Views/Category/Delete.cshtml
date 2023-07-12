@@ -6,7 +6,7 @@
     </div>
 
     <form method="post" asp-action="DeleteEmp">
-        <input asp-for="c_id" hidden />
+        <input asp-for="Id" hidden />
         <div asp-validation-summary="All"></div>
 
         <div class="form-row">
@@ -16,19 +16,19 @@
                 <span asp-validation-for="c_id" class=" alert-danger"></span>
             </div>*@
             <div class="form-group col-md-6">
-                <label asp-for="creator_id">Id người tạo</label>
-                <input type="text" class="form-control mb-3" asp-for="creator_id" placeholder="Id người sáng tạo">
-                <span asp-validation-for="creator_id" class=" alert-danger"></span>
+                <label asp-for="CreateId">Id người tạo</label>
+                <input type="text" class="form-control mb-3" asp-for="CreateId" placeholder="Id người sáng tạo">
+                <span asp-validation-for="CreateId" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="title">Title</label>
-                <input type="text" class="form-control mb-3" asp-for="title" placeholder="Title">
-                <span asp-validation-for="title" class=" alert-danger"></span>
+                <label asp-for="Title">Title</label>
+                <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Title">
+                <span asp-validation-for="Title" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="content">Content</label>
-                <input type="text" class="form-control mb-3" asp-for="content" placeholder="Content">
-                <span asp-validation-for="content" class=" alert-danger"></span>
+                <label asp-for="Content">Content</label>
+                <input type="text" class="form-control mb-3" asp-for="Content" placeholder="Content">
+                <span asp-validation-for="Content" class=" alert-danger"></span>
             </div> 
         </div>
         <button type="submit" class="btn btn-lg btn-danger p-2"><i class="bi bi-trash-fill"></i>Xóa</button>
