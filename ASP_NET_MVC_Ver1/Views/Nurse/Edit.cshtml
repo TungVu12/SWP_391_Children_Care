@@ -1,4 +1,4 @@
-﻿@model Examination
+﻿@*@model Examination
 
 <div class="container shadow p-5">
     <div class="row pb-2">
@@ -78,10 +78,11 @@
 </div>
 
 
-@*//for front end validations*@
+@*//for front end validations
 
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
 }
+*@
