@@ -34,9 +34,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                       @* <td width="20%">
-                            @item.Id
-                        </td>*@
+                        @* <td width="20%">
+                @item.Id
+                </td>*@
                         <td width="20%">
                             @item.parent_id
                         </td>
@@ -51,6 +51,9 @@
                         </td>
                         <td width="20%">
                             @item.status.GetDisplayName()
+                        </td>
+                        <td width="20%">
+                            @item.examination_status.GetDisplayName()
                         </td>
                         @*  <td width="20%">
                 @(item.status == 1 ? "active" : item.status != 1 ? "fail" : "")

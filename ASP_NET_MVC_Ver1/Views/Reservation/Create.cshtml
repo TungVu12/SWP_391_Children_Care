@@ -6,6 +6,10 @@
 @{
     string minDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
+@if (TempData["ResultOk"] != null)
+{
+    <h1 class="alert-success">@TempData["ResultOk"]</h1>
+}
 <div class="container shadow p-5">
     <div class="row pb-2">
         <h2>Đặt lịch hẹn khám</h2>
@@ -23,7 +27,7 @@
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
                     "Chọn Bác sĩ",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" , @onchange = "FillState(this.value)" })
+                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" , @onchange = "callAPIBooking(this.value)" })
                     </div>
                 </div>
             }
@@ -33,9 +37,10 @@
                     @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <input type="text" class="form-control mb-3" asp-for="doctor_id" readonly="true" value=@ViewBag.doctorName>
+                        <input type="text" id="DoctorSelected" value="@ViewBag.doctorId" hidden>
                     </div>
                 </div>
-            }   
+            }
             @*danh sách bố mẹ*@
             @if (@ViewBag.Admin || @ViewBag.Doctor)
             {
@@ -76,9 +81,9 @@
                         @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
                     "Chọn trẻ em",
                     htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" })
-                    @*@Html.DropDownListFor(x => x.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"), new { htmlAttributes = new { @class = "form-control", @disabled = true, @readonly = "readonly"} })*@
+                        @*@Html.DropDownListFor(x => x.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"), new { htmlAttributes = new { @class = "form-control", @disabled = true, @readonly = "readonly"} })*@
                     </div>
-                    
+
                 </div>
             }
             <div class="form-group col-md-6">
@@ -109,9 +114,10 @@
                 @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                        @Html.DropDownListFor(model => model.slot, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value"),
+                    //@Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
                     //"Chọn Ca khám",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2"})
+                    htmlAttributes: new { @id = "SlotFilter", @class = "form-control col-md-2"})
                     </div>
                 </div>
             }
@@ -161,7 +167,6 @@
             dataType: "JSON",
             data: { country: countryParam },
             success: function (states) {
-                debugger;
                 $("#profileState").html(""); // clear before appending new list
                 $.each(states, function (i, statetest) {
                     $("#profileState").append(
@@ -170,37 +175,36 @@
             }
         });
     }
+    document.getElementById("birthDateInput").addEventListener("change", function () {
+        // Gọi hàm xử lý khi có sự thay đổi giá trị
+        callAPIBooking();
+    });
+    function callAPIBooking(val) {
+        var birthDate = document.getElementById("birthDateInput").value;
+        var doctorId = $('#DoctorSelected').val();
+        var url = "/api/GetData/callAPIBooking?bookingDate=" + birthDate + "&idDoctor=" + doctorId;
+        // Gọi API bằng Ajax
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            //data: { country: countryParam },
+            success: function (response) {
+                $("#SlotFilter").html(""); //
+                $.each(response, function (i, statetest) {
+                    $("#SlotFilter").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
 
-
-                                    //function handleChaged(val) {
-                                    //    debugger;
-
-                                    //    // Creating Our XMLHttpRequest object
-                                    //    let xhr = new XMLHttpRequest();
-
-                                    //    // Making our connection
-                                    //    var url = "/api/GetData/GetChildren?childID=" + val;
-
-                                    //    xhr.open("GET", url, true);
-
-                                    //    // function execute after request is successful
-                                    //    xhr.onreadystatechange = function () {
-                                    //        if (this.readyState == 4 && this.status == 200) {
-                                    //            debugger;
-                                    //            console.log(this.responseText);
-                                    //           let list = JSON.parse(this.responseText);
-                                    //            var dropdown = document.getElementById("child_id");
-                                    //            list.forEach(function (item) {
-                                    //                var option = document.createElement("option");
-                                    //                option.value = item.Value;
-                                    //                option.text = item.Text;
-                                    //                dropdown.appendChild(option);
-                                    //            });
-                                    //        }
-                                    //    }
-                                    //    // Sending our request
-                                    //    xhr.send();
-                                    //}
+                // Xử lý dữ liệu trả về từ API
+                // Ví dụ: gán giá trị cho các trường khác trên trang
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi khi gọi API
+                console.log(error);
+            }
+        });
+    }
 </script>
 @section Scripts{
     @{

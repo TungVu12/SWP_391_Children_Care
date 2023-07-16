@@ -1,8 +1,10 @@
 ﻿@model Examination
-
+@{
+    string minDate = DateTime.Now.ToString("yyyy-MM-dd");
+}
 <div class="container shadow p-5">
     <div class="row pb-2">
-        <h2>Thêm bé</h2>
+        <h2>Thêm hồ sơ bệnh án</h2>
     </div>
 
     <form method="post">
@@ -10,75 +12,131 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="RegistrationDate">Ngày đăng ký</label>
-                <input type="datetime-local" class="form-control mb-3" asp-for="RegistrationDate" placeholder="Nhap theo fomat dd/MM/yyyy">
-                <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
+                @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),"Chọn Bác sĩ", htmlAttributes: new { @id = "LstDoctor", @class = "form-control col-md-2" , @onchange = "FillStateDoctor(this.value)" })
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ChilderName">Họ và tên đệm bé</label>
-                <input type="text" class="form-control mb-3" asp-for="ChilderName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="ChilderName" class=" alert-danger"></span>
+                @Html.LabelFor(model => model.reservation_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.reservation_id, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value" ),
+                    "Chọn lịch khám",
+                    htmlAttributes: new { @id = "reservation", @class = "form-control col-md-2",@onchange = "FillStateData(this.value)" })
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ParentName">Họ và tên đệm người giám hộ</label>
-                <input type="text" class="form-control mb-3" asp-for="ParentName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="ParentName" class=" alert-danger"></span>
+                @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
+                    "Chọn khoa",
+                    htmlAttributes: new {@id = "category", @class ="form-control col-md-2" })
+                </div>
+            </div>
+            <div class="form-group  col-md-6">
+                @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),"Chọn Phụ huynh", htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" , @onchange = "FillState(this.value)" })
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="PhoneNumber">Số điện thoại</label>
-                <input type="text" class="form-control mb-3" asp-for="PhoneNumber" placeholder="Nhập số điện thoại">
-                <span asp-validation-for="PhoneNumber" class=" alert-danger"></span>
+                @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.child_id, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value"),
+                    //"Chọn bé",
+                    htmlAttributes: new { @id = "profileState", @class = "form-control col-md-2" })
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Sex">Giới tính bé</label>
-                <input type="text" class="form-control mb-3" asp-for="Sex" placeholder="Nhập giới tính">
-                <span asp-validation-for="Sex" class=" alert-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6 mb-3">
-                <label asp-for="DateOfBirth">Sinh nhật bé</label>
-                <input type="datetime-local" class="form-control" asp-for="DateOfBirth">
-                <span asp-validation-for="DateOfBirth" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Email">Địa chỉ email</label>
-                <input type="text" class="form-control mb-3" asp-for="Email" placeholder="Nhập địa chỉ">
-                <span asp-validation-for="Email" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Address">Địa chỉ</label>
-                <input type="text" class="form-control mb-3" asp-for="Address" placeholder="Nhập địa chỉ">
-                <span asp-validation-for="Address" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Detail">Nội dung bệnh án</label>
-                <input type="text" class="form-control mb-3" asp-for="Detail" placeholder="Nhập nội dung bệnh án">
+                <label asp-for="Detail">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="Detail" placeholder="Nội dung chẩn đoán">
                 <span asp-validation-for="Detail" class=" alert-danger"></span>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="DoctorName">Bác sĩ khám</label>
-                <input type="text" class="form-control mb-3" asp-for="DoctorName" placeholder="Nhập tên bác sĩ">
-                <span asp-validation-for="DoctorName" class=" alert-danger"></span>
+                <label asp-for="r_content">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
+                <span asp-validation-for="r_content" class=" alert-danger"></span>
             </div>
-        </div>
-
-
-        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
-        <a asp-controller="Children" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+            <div class="form-group col-md-6">
+                <label asp-for="Desciption">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Nội dung chẩn đoán">
+                <span asp-validation-for="Desciption" class=" alert-danger"></span>
+            </div>
+            @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group col-md-6 mb-3">
+                <input type="date" class="form-control datepicker" asp-for="RegistrationDate" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
+                <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
+            <a asp-controller="Children" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
     </form>
 
 </div>
 
+<script>
+    function FillState(val) {
+        var url = "/api/GetData/GetChildren?parentId=" + val;
+        var countryParam = $('#profileCountry').val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "JSON",
+            data: { country: countryParam },
+            success: function (states) {
+                $("#profileState").html(""); // clear before appending new list
+                $.each(states, function (i, statetest) {
+                    $("#profileState").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
+            }
+        });
+    }
 
-@*//for front end validations*@
+    function FillStateDoctor(val) {
+        var url = "/api/GetData/GetReservation?doctorId=" + val;
+        var countryParam = $('#LstDoctor').val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "JSON",
+            data: { country: countryParam },
+            success: function (states) {
+                $("#reservation").html(""); // clear before appending new list
+                $.each(states, function (i, statetest) {
+                    $("#reservation").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
+            }
+        });
+    }
 
+    function FillStateData(val) {
+        var url = "/api/GetData/GetReservationFull?reservationId=" + val;
+        var countryParam = $('#reservation').val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "JSON",
+            data: { country: countryParam },
+            success: function (states) {
+                $("#profileCountry").html("");
+                $("#profileState").html("");
+                $("#category").html("");
+                // clear before appending new list
+                $("#category").append(
+                    $('<option></option>').val(states[0].text).html(states[0].value));
+                $("#profileCountry").append(
+                    $('<option></option>').val(states[1].text).html(states[1].value));
+                $("#profileState").append(
+                    $('<option></option>').val(states[2].text).html(states[2].value));
+
+            }
+        });
+    }
+</script>
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
 }
+

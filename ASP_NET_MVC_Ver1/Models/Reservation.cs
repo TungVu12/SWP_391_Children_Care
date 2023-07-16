@@ -1,6 +1,7 @@
 ﻿using ASP_NET_MVC_Ver1.Enum;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace ASP_NET_MVC_Ver1.Models
@@ -38,6 +39,10 @@ namespace ASP_NET_MVC_Ver1.Models
         public StatusSending status { get; set; }
         [Display(Name = "Thông tin mô tả")]
         public string Desciption { get; set; }
+        [Display(Name = "Thông tin mô tả")]
+        public StatusExamination examination_status { get; set; }
+        [NotMapped]
+        public int backup { get; set; }
 
 
     }

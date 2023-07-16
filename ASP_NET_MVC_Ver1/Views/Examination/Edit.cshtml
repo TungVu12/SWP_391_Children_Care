@@ -1,5 +1,7 @@
 ﻿@model Examination
-
+@{
+    string minDate = DateTime.Now.ToString("yyyy-MM-dd");
+}
 <div class="container shadow p-5">
     <div class="row pb-2">
         <h2>Sửa thông tin bé</h2>
@@ -10,64 +12,68 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="RegistrationDate">Ngày đăng ký</label>
-                <input type="datetime-local" class="form-control mb-3" asp-for="RegistrationDate" placeholder="Nhap theo fomat dd/MM/yyyy">
-                <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
+                @Html.HiddenFor(model => model.doctor_id)
+                @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),"Chọn Bác sĩ", htmlAttributes: new { @id = "LstDoctor",@disabled = true, @class = "form-control col-md-2" , @onchange = "FillStateDoctor(this.value)" })
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.reservation_id)
+            @Html.LabelFor(model => model.reservation_id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group col-md-6">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.reservation_id, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                    htmlAttributes: new { @id = "SlotFilter", @class = "form-control col-md-2", @disabled = true})
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ChilderName">Họ và tên đệm bé</label>
-                <input type="text" class="form-control mb-3" asp-for="ChilderName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="ChilderName" class=" alert-danger"></span>
+                @Html.HiddenFor(model => model.category)
+                @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
+                    "Chọn khoa",
+                    htmlAttributes: new {@id = "category", @class ="form-control col-md-2",@disabled = true })
+                </div>
+            </div>
+            <div class="form-group  col-md-6">
+                @Html.HiddenFor(model => model.parent_id)
+                @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),"Chọn Phụ huynh", htmlAttributes: new { @id = "profileCountry",@disabled = true, @class = "form-control col-md-2" , @onchange = "FillState(this.value)" })
+                </div>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ParentName">Họ và tên đệm người giám hộ</label>
-                <input type="text" class="form-control mb-3" asp-for="ParentName" placeholder="Nhập họ và tên đệm">
-                <span asp-validation-for="ParentName" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="PhoneNumber">Số điện thoại</label>
-                <input type="text" class="form-control mb-3" asp-for="PhoneNumber" placeholder="Nhập số điện thoại">
-                <span asp-validation-for="PhoneNumber" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Sex">Giới tính bé</label>
-                <input type="text" class="form-control mb-3" asp-for="Sex" placeholder="Nhập tên bé">
-                <span asp-validation-for="Sex" class=" alert-danger"></span>
-            </div>
-        </div>
+                @Html.HiddenFor(model => model.child_id)
+                @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
+                    "Chọn trẻ em",
+                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2",@disabled = true })
+                </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6 mb-3">
-                <label asp-for="DateOfBirth">Ngày tháng năm sinh</label>
-                <input type="datetime-local" class="form-control" asp-for="DateOfBirth">
-                <span asp-validation-for="DateOfBirth" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Email">Địa chỉ email</label>
-                <input type="text" class="form-control mb-3" asp-for="Email" placeholder="Nhập email">
-                <span asp-validation-for="Email" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Address">Địa chỉ</label>
-                <input type="text" class="form-control mb-3" asp-for="Address" placeholder="Nhập địa chỉ">
-                <span asp-validation-for="Address" class=" alert-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Detail">Nội dung bệnh án</label>
-                <input type="text" class="form-control mb-3" asp-for="Detail" placeholder="Nhập nội dung">
+                <label asp-for="Detail">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="Detail" placeholder="Nội dung chẩn đoán">
                 <span asp-validation-for="Detail" class=" alert-danger"></span>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="DoctorName">Bác sĩ khám</label>
-                <input type="text" class="form-control mb-3" asp-for="DoctorName" placeholder="Nhập tên bác sĩ">
-                <span asp-validation-for="DoctorName" class=" alert-danger"></span>
+                <label asp-for="r_content">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
+                <span asp-validation-for="r_content" class=" alert-danger"></span>
             </div>
-        </div>
-        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
-        <a asp-controller="Examination" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+            <div class="form-group col-md-6">
+                <label asp-for="Desciption">Nội dung chẩn đoán</label>
+                <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Nội dung chẩn đoán">
+                <span asp-validation-for="Desciption" class=" alert-danger"></span>
+            </div>
+            @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group col-md-6 mb-3">
+                <input type="date" class="form-control datepicker" asp-for="RegistrationDate" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
+                <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Update</button>
+            <a asp-controller="Examination" asp-action="Index" class="btn btn-lg btn-warning p-2">Back</a>
     </form>
 
 </div>

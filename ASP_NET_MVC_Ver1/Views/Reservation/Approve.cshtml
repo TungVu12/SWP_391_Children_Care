@@ -31,7 +31,7 @@
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
                     "Chọn Bác sĩ",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" })
+                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" , @onchange = "callAPIBooking(this.value)" })
                     </div>
                 </div>
                 <div class="form-group  col-md-6">
@@ -70,21 +70,6 @@
 
                     </div>
                 </div>
-                @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        <input type="date" class="form-control datepicker" asp-for="booking_date" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
-                        <span asp-validation-for="booking_date" class=" alert-danger"></span>
-                    </div>
-                </div>
-                @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
-                    //"Chọn Ca khám",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2"})
-                    </div>
-                </div>
                 @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
                     <div class="col-md-10">
@@ -109,8 +94,8 @@
                         @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
-                    "Chọn bác sĩ",
-                    htmlAttributes: new { @id = "Doctor", @class = "form-control col-md-2", @disabled = true, @readonly = "readonly" })
+                    "Chọn Bác sĩ",
+                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -153,21 +138,7 @@
 
                         </div>
                     </div>
-                    @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="date" class="form-control datepicker" asp-for="booking_date" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
-                            <span asp-validation-for="booking_date" class=" alert-danger"></span>
-                        </div>
-                    </div>
-                    @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
-                    //"Chọn Ca khám",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2"})
-                        </div>
-                    </div>
+
                     @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
                         <div class="col-md-10">
@@ -190,8 +161,8 @@
                         @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
-                    "Chọn bác sĩ",
-                    htmlAttributes: new { @id = "Doctor", @class = "form-control col-md-2", @disabled = true, @readonly = "readonly" })
+                    "Chọn Bác sĩ",
+                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -234,21 +205,7 @@
 
                         </div>
                     </div>
-                    @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="date" class="form-control datepicker" asp-for="booking_date" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
-                            <span asp-validation-for="booking_date" class=" alert-danger"></span>
-                        </div>
-                    </div>
-                    @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
-                    //"Chọn Ca khám",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled=true})
-                        </div>
-                    </div>
+
                     @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
                         <div class="col-md-10">
@@ -264,12 +221,52 @@
                     </div>
                 }
 
-            }
 
+            }
+            @if (ViewBag.ApproveTotal == (int)StatusSending.Process)
+            {
+                @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group col-md-6 mb-3">
+                    <input type="date" class="form-control datepicker" asp-for="booking_date" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
+                    <span asp-validation-for="booking_date" class=" alert-danger"></span>
+                </div>
+                @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group col-md-6">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled=true})
+                    </div>
+                </div>
+                <label asp-for="slot">Ca khám cần thay đổi</label>
+                <div class="form-group col-md-6">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.slot, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value"),
+                    htmlAttributes: new { @id = "SlotFilter", @class = "form-control col-md-2"})
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group col-md-6">
+                    <div class="col-md-10">
+                        <input type="date" class="form-control datepicker" asp-for="booking_date" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
+                        <span asp-validation-for="booking_date" class=" alert-danger"></span>
+                    </div>
+                </div>
+                @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="form-group col-md-6">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled=true})
+                    </div>
+                </div>
+            }
             @if (ViewBag.ApproveTotal == (int)StatusSending.Process)
             {
                 <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill">Xác nhận</i></button>
-            }else if (ViewBag.Admin)
+            }
+            else if (ViewBag.Admin)
             {
                 <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill">Xác nhận</i></button>
             }
@@ -282,6 +279,37 @@
 
 @*//for front end validations*@
 <script>
+    document.getElementById("birthDateInput").addEventListener("change", function () {
+        // Gọi hàm xử lý khi có sự thay đổi giá trị
+        debugger;
+        callAPIBooking();
+    });
+    function callAPIBooking() {
+        var birthDate = document.getElementById("birthDateInput").value;
+        var doctorId = $('#DoctorSelected').val();
+        var url = "/api/GetData/callAPIBooking?bookingDate=" + birthDate + "&idDoctor=" + doctorId;
+        // Gọi API bằng Ajax
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            //data: { country: countryParam },
+            success: function (response) {
+                $("#SlotFilter").html(""); //
+                $.each(response, function (i, statetest) {
+                    $("#SlotFilter").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
+
+                // Xử lý dữ liệu trả về từ API
+                // Ví dụ: gán giá trị cho các trường khác trên trang
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi khi gọi API
+                console.log(error);
+            }
+        });
+    }
     function FillState(val) {
         var url = "/api/GetData/GetChildren?parentId=" + val;
         var countryParam = $('#profileCountry').val();
@@ -299,22 +327,22 @@
                 });
             }
         });
-        $('#Parent').change(function () {
-            var selectedValue = $(this).val();
-            $('#parent_id').val(selectedValue);
 
-            $('#Doctor').change(function () {
-                var selectedValue = $(this).val();
-                $('#doctor_id').val(selectedValue);
+    }
+                                            //$('#Parent').change(function () {
+                                            //    var selectedValue = $(this).val();
+                                            //    $('#parent_id').val(selectedValue);
 
-            });
-            $('#profileCountry').change(function () {
-                var selectedValue = $(this).val();
-                $('#child_id').val(selectedValue);
+                                            //    $('#Doctor').change(function () {
+                                            //        var selectedValue = $(this).val();
+                                            //        $('#doctor_id').val(selectedValue);
 
-            });
-            
-        }
+                                            //    });
+                                            //    $('#profileCountry').change(function () {
+                                            //        var selectedValue = $(this).val();
+                                            //        $('#child_id').val(selectedValue);
+
+                                            //    });
 </script>
 
 @section Scripts{

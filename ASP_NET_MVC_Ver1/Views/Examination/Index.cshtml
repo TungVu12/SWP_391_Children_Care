@@ -3,12 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 @if (TempData["ResultOk"] != null)
 {
     <h1 class="alert-success">@TempData["ResultOk"]</h1>
 }
-
 <div class="container shadow p-5">
 
 
@@ -18,12 +16,10 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="col" width="120px" style="text-align: center">Ngày đăng ký</th>
+                <th scope="col" width="120px" style="text-align: center">Ngày khám bệnh</th>
                 <th scope="col" width="100px" style="text-align: center">Tên bé</th>
                 <th scope="col" width="100px" style="text-align: center">Tên người giám hộ</th>
-                <th scope="col" width="100px" style="text-align: center">Điện thoại</th>
-                <th scope="col" width="100px" style="text-align: center">Giới tính</th>
-                <th scope="col" width="100px" style="text-align: center">Địa chỉ</th>
+                <th scope="col" width="100px" style="text-align: center">Khoa khám</th>
                 <th scope="col" width="300px" style="text-align: center">Nội dung bệnh án</th>
                 <th scope="col" width="100px" style="text-align: center">Tên bác sĩ chỉ định</th>
                 <th></th>
@@ -38,25 +34,19 @@
                         @item.RegistrationDate.ToString("dd/MM/yyyy")
                     </td>
                     <td width="20px">
-                        @item.ChilderName
+                        @item.child_id
                     </td>
                     <td width="20px">
-                        @item.ParentName
+                        @item.parent_id
                     </td>
                     <td width="20px">
-                        @item.PhoneNumber
+                        @item.category
                     </td>
                     <td width="20px">
-                        @item.Sex
+                        @item.r_content
                     </td>
                     <td width="20px">
-                        @item.Address
-                    </td>
-                    <td width="200px">
-                        @item.Detail
-                    </td>
-                    <td width="20px">
-                        @item.DoctorName
+                        @item.doctor_id
                     </td>
                     <td>
                         <div role="group" class="w-60 btn-group">

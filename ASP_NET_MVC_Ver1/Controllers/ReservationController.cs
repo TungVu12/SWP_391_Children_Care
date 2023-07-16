@@ -24,10 +24,12 @@ namespace ASP_NET_MVC_Ver1.Controllers
         //bool isDoctor = User.IsInRole(Roles.Doctor.ToString());
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            isAdmin = User.IsInRole(Roles.Admin.ToString());
-            isDoctor = User.IsInRole(Roles.Doctor.ToString());
-            isParent = User.IsInRole(Roles.Parent.ToString());
+            var role = false;
+            isAdmin = User.IsInRole(Roles.Admin.ToString()) ? true : false;
+            isDoctor = User.IsInRole(Roles.Doctor.ToString()) ? true : false;
+            isParent = User.IsInRole(Roles.Parent.ToString()) ? true : false;
             idUser = _uid.GetUserId(HttpContext.User);
+
             ViewBag.Admin = isAdmin;
             ViewBag.Doctor = isDoctor;
             ViewBag.Parent = isParent;
@@ -146,6 +148,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             else if (isDoctor)
             {
                 var resultModel = _uid.GetUserAsync(HttpContext.User);
+                ViewBag.doctorId = resultModel.Result.Id.ToString();
                 ViewBag.doctorName = resultModel.Result.FirstName + resultModel.Result.LastName;
             }
 
@@ -217,11 +220,12 @@ namespace ASP_NET_MVC_Ver1.Controllers
         public IActionResult Create(Reservation empobj)
         {
             empobj.create_date = DateTime.Now;
-            if (isParent)
+            List<Reservation> ReservationLst = _context.Reservations.ToList();
+            if (isParent && !isAdmin)
             {
                 empobj.parent_id = idUser;
             }
-            else if (isDoctor)
+            else if (isDoctor && !isAdmin)
             {
                 empobj.doctor_id = idUser;
             }
@@ -247,6 +251,19 @@ namespace ASP_NET_MVC_Ver1.Controllers
             var empfromdb = _context.Reservations.Find(Id);
             ApproveTotal = (int)empfromdb.status;
             ViewBag.ApproveTotal = ApproveTotal;
+
+            var getData = await _uid.GetUsersInRoleAsync(Roles.Doctor.ToString());
+            var filterParent = getData.Where(c => c.Email != "admin@gmail.com").ToList();
+            List<SelectListItem> lstDoctor = new List<SelectListItem>();
+            foreach (var doctor in filterParent)
+            {
+                if (doctor.Id.ToString() != null)
+                {
+                    lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
+
+                }
+            }
+            ViewBag.doctor_lst = lstDoctor;
 
             List<Children> childrens = _context.Childrens.ToList();
             List<SelectListItem> lstChildrens = new List<SelectListItem>();
@@ -281,18 +298,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             ViewBag.category_lst = category;
 
 
-            var getData = await _uid.GetUsersInRoleAsync(Roles.Doctor.ToString());
-            var filterParent = getData.Where(c => c.Email != "admin@gmail.com").ToList();
-            List<SelectListItem> lstDoctor = new List<SelectListItem>();
-            foreach (var doctor in filterParent)
-            {
-                if (doctor.Id.ToString() != null)
-                {
-                    lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
 
-                }
-            }
-            ViewBag.doctor_lst = lstDoctor;
 
             var getData1 = await _uid.GetUsersInRoleAsync(Roles.Parent.ToString());
             var filterParent1 = getData1.Where(c => c.Email != "admin@gmail.com").ToList();
