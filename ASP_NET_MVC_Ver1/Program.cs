@@ -14,8 +14,14 @@ public class Program
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            //options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            //options.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b =>
+            {
+                b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+            });
         });
+
 
         builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
              .AddRoles<IdentityRole>()
@@ -65,12 +71,17 @@ public class Program
                 logger.LogError(ex, "An error occurred seeding the DB.");
             }
         }
-
+       
         app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
-        app.MapRazorPages();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapRazorPages();
+        });
+        //app.MapRazorPages();
 
     app.Run();
     }
