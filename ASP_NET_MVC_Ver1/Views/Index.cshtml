@@ -129,3 +129,39 @@
             //  Các month
 
         }
+
+        function showMixedChart() {
+            //Hàm MixedChart
+            var ctx = document.getElementById('columnLineChart').getContext('2d');
+            var chartData = @Html.Raw(Json.Serialize(ViewBag.ChartData));
+            var labels = chartData.map((_, index) => getEnglishMonthName(index + 1));
+
+            var mixedChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Column Chart',
+                        data: chartData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Line Chart',
+                        data: chartData,
+                        type: 'line',
+                        fill: false,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
