@@ -15,6 +15,7 @@
             {
                 <div class="form-check">
                     <input type="hidden" asp-for="@Model[i].RoleId" />
+
                     <input type="hidden" asp-for="@Model[i].RoleName" />
                     <input type="checkbox" asp-for="@Model[i].Selected" class="form-check-input" id="@Model[i].RoleId" />
                     <label class="form-check-label" asp-for="@Model[i].Selected" for="@Model[i].RoleId">
