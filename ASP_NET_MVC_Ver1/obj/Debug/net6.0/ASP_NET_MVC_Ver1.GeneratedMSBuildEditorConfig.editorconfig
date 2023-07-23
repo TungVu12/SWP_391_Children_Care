@@ -188,12 +188,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXBkYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Blog/Blogs.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xCbG9ncy5jc2h0bWw=
+[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Blog/BlogDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xCbG9nRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Blog/BlogsMXH.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xCbG9nc01YSC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Blog/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Blog/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Category/Create.cshtml]
@@ -268,8 +276,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnVyc2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Reservation/Approve.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cQXBwcm92ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Reservation/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Reservation/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzZXJ2YXRpb25cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SWP391/git/SWP_391_Children_Care/ASP_NET_MVC_Ver1/Views/Reservation/Index.cshtml]

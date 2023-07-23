@@ -1,5 +1,7 @@
-﻿using ASP_NET_MVC_Ver1.Models;
+﻿using ASP_NET_MVC_Ver1.Areas.Identity.Data;
+using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ASP_NET_MVC_Ver1.Controllers
@@ -7,14 +9,18 @@ namespace ASP_NET_MVC_Ver1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            IEnumerable<Category> objCatlist = _context.Categories;
+            ViewBag.Categories = objCatlist.Take(6).ToList();
             return View();
         }
 
@@ -38,6 +44,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         public IActionResult Contact()
         {
+            //testc commit
             return View();
         }
     }

@@ -2,64 +2,91 @@
 @{
     string maxDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
+<style>
+    body {
+        background-color: #f7f7f7;
+        font-family: Arial, sans-serif;
+    }
 
-<div class="container shadow p-5">
+    .container-a {
+        margin-top: 50px;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #007bff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+</style>
+<div class="container-a">
     <div class="row pb-2">
         <h2>Thêm bé</h2>
     </div>
-
     <form method="post">
         <div asp-validation-summary="All"></div>
+        <div class="row">
 
-        <div class="form-row">
             @if (ViewBag.Admin || ViewBag.Doctor)
             {
 
-                <div class="form-group  col-md-6">
+                <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"), htmlAttributes: new { @class = "form-control col-md-2" })
-                    </div>
+                    @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"), htmlAttributes: new { @class = "form-control col-md-2" })
                 </div>
             }
             else
             {
-                <label asp-for="parent_id">Tên phụ huynh bé</label>
-                <input type="text" class="form-control mb-3" asp-for="parent_id" readonly="true" value=@ViewBag.parentName>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input type="text" class="form-control mb-3" asp-for="parent_id" readonly="true" value=@ViewBag.parentName>
+                </div>
             }
             <div class="form-group col-md-6">
-                <label asp-for="FullName">Họ và tên</label>
-                <input type="text" class="form-control mb-3" asp-for="FullName" placeholder="Nhập họ và tên">
-                <span asp-validation-for="FullName" class=" alert-danger"></span>
+                @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-4" })
+                <input type="text" class="form-control mb-3 col-md-8" asp-for="FullName" placeholder="Nhập họ và tên">
+                <span asp-validation-for="FullName" class="alert-danger"></span>
             </div>
-            <div class="form-group col-md-6 mb-3">
-                <label asp-for="BirdthDate">Sinh nhật bé</label>
-                <input type="date" class="form-control datepicker" asp-for="BirdthDate" id="birthDateInput" max="@maxDate" asp-format="{0:yyyy-MM-dd}">
-                <span asp-validation-for="BirdthDate" class=" alert-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="Age">Tuổi</label>
+                @Html.LabelFor(model => model.BirdthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                <input type="date" class="form-control datepicker col-md-8" asp-for="BirdthDate" id="birthDateInput" max="@maxDate" asp-format="{0:yyyy-MM-dd}">
+                <span asp-validation-for="BirdthDate" class="alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
                 <input type="text" class="form-control mb-3" asp-for="Age" placeholder="Nhập tuổi" readonly="true" id="calAge">
                 <span asp-validation-for="Age" class=" alert-danger"></span>
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Address">Địa chỉ</label>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                 <input type="text" class="form-control mb-3" asp-for="Address" placeholder="Nhập địa chỉ">
                 <span asp-validation-for="Address" class=" alert-danger"></span>
             </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-lg btn-outline-primary px-4 py-2 mx-2"><i class="bi bi-save"></i> Save</button>
+                <a asp-controller="Children" asp-action="Index" class="btn btn-lg btn-outline-warning px-4 py-2">Back</a>
+            </div>
         </div>
-
-
-        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
-        <a asp-controller="Children" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
     </form>
-
 </div>
 
 
-@*//for front end validations*@
 <script>
 
     // Gắn sự kiện "change" vào trường input

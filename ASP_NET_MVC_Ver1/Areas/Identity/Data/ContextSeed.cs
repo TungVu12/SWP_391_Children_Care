@@ -16,9 +16,9 @@ namespace ASP_NET_MVC_Ver1.Areas.Identity.Data
         {
             //Seed Roles
             await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Manager.ToString()));
+            //await roleManager.CreateAsync(new IdentityRole(Roles.Manager.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Doctor.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Nurse.ToString()));
+            //await roleManager.CreateAsync(new IdentityRole(Roles.Nurse.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Parent.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Children.ToString()));
         }
@@ -64,16 +64,16 @@ namespace ASP_NET_MVC_Ver1.Areas.Identity.Data
                 var user = await userManager.FindByEmailAsync(defaultUser.Email);
                 if (user == null)
                 {
-                   
+
 
                     await userManager.SetUserNameAsync(defaultUser, defaultUser.Email);
                     await userManager.SetEmailAsync(defaultUser, defaultUser.Email);
 
                     var result = await userManager.CreateAsync(defaultUser, "admin123@Aa");
                     await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Roles.Manager.ToString());
+                    //await userManager.AddToRoleAsync(defaultUser, Roles.Manager.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Doctor.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Roles.Nurse.ToString());
+                    //await userManager.AddToRoleAsync(defaultUser, Roles.Nurse.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Parent.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Children.ToString());
 

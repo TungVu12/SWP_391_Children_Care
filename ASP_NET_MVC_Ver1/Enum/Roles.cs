@@ -8,9 +8,9 @@ namespace ASP_NET_MVC_Ver1.Enum
     public enum Roles
     {
         Admin,
-        Manager,
+        //Manager,
         Doctor,
-        Nurse,
+        //Nurse,
         Parent,
         Children
     }
@@ -24,5 +24,13 @@ namespace ASP_NET_MVC_Ver1.Enum
         Approved,
         [Display(Name = "Huỷ lịch")]
         Cancelled
+    }
+
+    public enum StatusExamination
+    {
+        [Display(Name = "Chưa khám bệnh")]
+        NotDone,
+        [Display(Name = "Đã khám bệnh")]
+        Done,
     }
 }
