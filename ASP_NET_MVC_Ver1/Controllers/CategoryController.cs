@@ -94,6 +94,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult DeleteEmp(Guid Id)
         {
+            //day la commetn phan xoa
             var deleterecord = _context.Categories.Find(Id);
             if (deleterecord == null)
             {
