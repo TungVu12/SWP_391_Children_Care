@@ -59,14 +59,14 @@ namespace ASP_NET_MVC_Ver1.Controllers
                     RoleId = role.Id,
                     RoleName = role.Name
                 };
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRolesViewModel.Selected = true;
-                }
-                else
-                {
-                    userRolesViewModel.Selected = false;
-                }
+                //if (await _userManager.IsInRoleAsync(user, role.Name))
+                //{
+                //    userRolesViewModel.Selected = true;
+                //}
+                //else
+                //{
+                //    userRolesViewModel.Selected = false;
+                //}
                 model.Add(userRolesViewModel);
             }
             //return RedirectToAction("Index", "UserRoles");
