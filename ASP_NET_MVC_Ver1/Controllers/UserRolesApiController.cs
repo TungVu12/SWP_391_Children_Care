@@ -59,6 +59,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 //    }
                 //}
 
+                customerData = customerData.Where(m => m.Email != "admin@gmail.com");
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     customerData = customerData.Where(m => m.FirstName.Contains(searchValue) || m.LastName.Contains(searchValue));

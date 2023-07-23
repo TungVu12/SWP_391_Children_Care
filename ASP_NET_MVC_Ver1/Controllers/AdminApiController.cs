@@ -74,6 +74,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                             customerData.OrderBy(x => EF.Property<object>(x, sortColumn));
                     }
                 }
+                customerData = customerData.Where(m => m.Email != "admin@gmail.com");
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     customerData = customerData.Where(m => m.FirstName.Contains(searchValue)
@@ -81,7 +82,6 @@ namespace ASP_NET_MVC_Ver1.Controllers
                                                            || m.Email.Contains(searchValue)
                     );
                 }
-
                 recordsTotal = customerData.Count();
                 int sttCounter = skip + 1;
                 var data = customerData.Skip(skip).Take(pageSize).ToList();

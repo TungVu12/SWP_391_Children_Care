@@ -4,6 +4,7 @@ using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ASP_NET_MVC_Ver1.Controllers
 {
@@ -16,9 +17,23 @@ namespace ASP_NET_MVC_Ver1.Controllers
         bool isParent = false;
         string idUser;
 
-        public BlogController(ApplicationDbContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            isAdmin = User.IsInRole(Roles.Admin.ToString());
+            isDoctor = User.IsInRole(Roles.Doctor.ToString());
+            isParent = User.IsInRole(Roles.Parent.ToString());
+            idUser = _uid.GetUserId(HttpContext.User);
+            ViewBag.Admin = isAdmin;
+            ViewBag.Doctor = isDoctor;
+            ViewBag.Parent = isParent;
+            base.OnActionExecuting(context);
+        }
+
+
+        public BlogController(ApplicationDbContext context, UserManager<ApplicationUser> uid)
         {
             _context = context;
+            _uid = uid;
         }
         public IActionResult Index()
         {
@@ -38,7 +53,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public IActionResult BlogDetail(Guid? Id)
+        public IActionResult BlogDetail(int? Id)
         {
             if (Id == null )
             {
@@ -58,22 +73,26 @@ namespace ASP_NET_MVC_Ver1.Controllers
         {
             var newBlog = new Post();
             newBlog.Image = new byte[0];
+            newBlog.CreatorId = 1;
             return View(newBlog);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Create(Post empobj)
+        public async Task<IActionResult> Create(Post empobj)
         {
             if (Request.Form.Files.Count > 0)
             {
-                IFormFile file = Request.Form.Files.FirstOrDefault();
+                IFormFile file =  Request.Form.Files.FirstOrDefault();
                 using (var dataStream = new MemoryStream())
                 {
-                    file.CopyToAsync(dataStream);
+                    await file.CopyToAsync(dataStream);
                     empobj.Image = dataStream.ToArray();
                 }
             }
+
+            Random random = new Random();
+            empobj.CreatorId = 1;
             if (ModelState.IsValid)
             {
                 empobj.CreateDate = DateTime.Now;
@@ -87,13 +106,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Edit(Guid?id)
+        public IActionResult Edit(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
-            var empfromdb = _context.Posts.Find(id);
+            var empfromdb = _context.Posts.Find(Id);
 
             if (empfromdb == null)
             {
@@ -143,13 +162,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Delete(Guid? id)
+        public IActionResult Delete(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
-            var empfromdb = _context.Posts.Find(id);
+            var empfromdb = _context.Posts.Find(Id);
 
             if (empfromdb == null)
             {
@@ -161,7 +180,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Manager")]
-        public IActionResult DeleteEmp(Guid? id)
+        public IActionResult DeleteEmp(int? id)
         {
             if (id == null)
             {

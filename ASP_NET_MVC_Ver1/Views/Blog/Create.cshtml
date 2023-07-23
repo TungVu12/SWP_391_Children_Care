@@ -20,6 +20,11 @@
                 <div class="form-group col-md-6">
                     @Html.TextAreaFor(model => model.Description, new { style = "width: 206px; height: 286px;" })
                 </div>
+                <div class="form-group col-md-6">
+                 @Html.HiddenFor(model => model.CreatorId)
+                @*@Html.LabelFor(model => model.CreateId, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                <input type="text" class="form-control mb-3 col-md-8" asp-for="CreatorId" placeholder="Enter Description" hidden = true">
+            </div>
             </div>
             <div class="col-md-6">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
