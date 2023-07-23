@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -15,5 +17,7 @@ namespace ASP_NET_MVC_Ver1.Models
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
+        [DefaultValue(null)]
+        public string Description { get; set; }
     }
 }
