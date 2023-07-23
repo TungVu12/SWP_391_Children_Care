@@ -3,86 +3,93 @@
 @model Reservation
 
 @{
-    ViewData["Title"] = "Index";
-}
-@{
     string minDate = DateTime.Now.ToString("yyyy-MM-dd");
 }
+<style>
+    body {
+        background-color: #f7f7f7;
+        font-family: Arial, sans-serif;
+    }
 
-@if (TempData["ResultOk"] != null)
-{
-    <h1 class="alert-success">@TempData["ResultOk"]</h1>
-}
+    .container-a {
+        margin-top: 50px;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
 
+    .form-group label {
+        font-weight: bold;
+    }
 
-<div class="container shadow p-5">
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #007bff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+</style>
+
+<div class="container-a">
     <div class="row pb-2">
-        <h2>Đặt lịch hẹn khám</h2>
+        <h2>Booking Information</h2>
     </div>
 
     <form method="post">
         <div asp-validation-summary="All"></div>
 
-        <div class="form-row">
+        <div class="row">
             @if (ViewBag.Admin)
             {
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
-                    "Chọn Bác sĩ",
-                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" , @onchange = "callAPIBooking(this.value)" })
-                    </div>
+                    @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
+                "Chọn Bác sĩ",
+                htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-4" , @onchange = "callAPIBooking(this.value)" })
                 </div>
                 <div class="form-group  col-md-6">
-                    @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),"Chọn Phụ huynh", htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" , @onchange = "FillState(this.value)" })
-                    </div>
+                    @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),"Chọn Phụ huynh", htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4" , @onchange = "FillState(this.value)" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
-                    "Chọn trẻ em",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" })
-                    </div>
+                    @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
+                "Chọn trẻ em",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4" })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
-                    "Chọn khoa",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" })
-                    </div>
+                    @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
+                "Chọn khoa",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4" })
                 </div>
 
-                @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám">
-                    </div>
+                    @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám">
                 </div>
-                @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
-
-                    </div>
+                    @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
                 </div>
-                @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm">
-                    </div>
+                    @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm">
                 </div>
 
 
-                @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-2"} )
-                    </div>
+                    @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-4"} )
                 </div>
             }
             else if (ViewBag.Doctor)
@@ -91,133 +98,99 @@
                 {
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.doctor_id)
-                        @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
-                    "Chọn Bác sĩ",
-                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
-                        </div>
+                        @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
+                "Chọn Bác sĩ",
+                htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-4" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
                     </div>
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.parent_id)
-                        @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),
-                    //"Chọn trẻ em",
-                    htmlAttributes: new { @id = "Parent", @class = "form-control col-md-2", @disabled = true, @readonly = "readonly"})
-                        </div>
+                        @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),
+                //"Chọn trẻ em",
+                htmlAttributes: new { @id = "Parent", @class = "form-control col-md-4", @disabled = true, @readonly = "readonly"})
                     </div>
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.child_id)
-                        @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
-                    "Chọn trẻ em",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled = true, @readonly = "readonly"})
-                        </div>
+                        @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
+                "Chọn trẻ em",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled = true, @readonly = "readonly"})
                     </div>
                     <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
-                    "Chọn khoa",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2" })
-                        </div>
+                        @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
+                "Chọn khoa",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4" })
                     </div>
 
-                    @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám">
-                        </div>
+                        @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám">
                     </div>
-                    @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
-
-                        </div>
+                        @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán">
                     </div>
 
-                    @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm">
-                        </div>
+                        @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm">
                     </div>
 
 
-                    @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-2"} )
-                        </div>
+                        @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-4"} )
                     </div>
                 }
                 else
                 {
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.doctor_id)
-                        @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
-                    "Chọn Bác sĩ",
-                    htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-2" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
-                        </div>
+                        @Html.LabelFor(model => model.doctor_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.doctor_id, new SelectList(ViewBag.doctor_lst, "Text", "Value"),
+                "Chọn Bác sĩ",
+                htmlAttributes: new { @id = "DoctorSelected", @class = "form-control col-md-4" ,@disabled = true, @readonly = "readonly", @onchange = "callAPIBooking(this.value)" })
                     </div>
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.parent_id)
-                        @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),
-                    //"Chọn trẻ em",
-                    htmlAttributes: new { @id = "Parent", @class = "form-control col-md-2", @disabled = true})
-                        </div>
+                        @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.parent_id, new SelectList(ViewBag.parent_lst, "Text", "Value"),
+                //"Chọn trẻ em",
+                htmlAttributes: new { @id = "Parent", @class = "form-control col-md-4", @disabled = true})
                     </div>
                     <div class="form-group col-md-6">
                         @Html.HiddenFor(model => model.child_id)
-                        @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
-                    "Chọn trẻ em",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled = true })
-                        </div>
+                        @Html.LabelFor(model => model.child_id, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.child_id, new SelectList(ViewBag.child_lst, "Text", "Value"),
+                "Chọn trẻ em",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled = true })
                     </div>
                     <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
-                    "Chọn khoa",
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled = true })
-                        </div>
+                        @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.category_lst, "Text", "Value"),
+                "Chọn khoa",
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled = true })
                     </div>
 
-                    @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám" disabled=true>
-                        </div>
+                        @Html.LabelFor(model => model.r_title, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="r_title" placeholder="Nhập bệnh cần khám" disabled=true>
                     </div>
-                    @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán" disabled=true>
-
-                        </div>
+                        @Html.LabelFor(model => model.r_content, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="r_content" placeholder="Nội dung chẩn đoán" disabled=true>
                     </div>
 
-                    @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm" disabled=true>
-                        </div>
+                        @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <input type="text" class="form-control mb-3" asp-for="Desciption" placeholder="Thông tin thêm" disabled=true>
                     </div>
 
-                    @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="form-group col-md-6">
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-2", @disabled=true} )
-                        </div>
+                        @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.DropDownListFor(x => x.status, new SelectList(Enum.GetValues(typeof(StatusSending)).Cast<StatusSending>().Select(e => new { Id = e, Name = e.GetDisplayName() }), "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-4", @disabled=true} )
                     </div>
                 }
 
@@ -225,128 +198,44 @@
             }
             @if (ViewBag.ApproveTotal == (int)StatusSending.Process)
             {
-                @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6 mb-3">
+                    @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-4" })
                     <input type="date" class="form-control datepicker" asp-for="booking_date" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
                     <span asp-validation-for="booking_date" class=" alert-danger"></span>
                 </div>
-                @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled=true})
-                    </div>
+                    @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled=true})
                 </div>
-                <label asp-for="slot">Ca khám cần thay đổi</label>
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.slot, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value"),
-                    htmlAttributes: new { @id = "SlotFilter", @class = "form-control col-md-2"})
-                    </div>
+                    <label asp-for="slot">Ca khám cần thay đổi</label>
+                    @Html.DropDownListFor(model => model.slot, new SelectList(Enumerable.Empty<SelectListItem>(), "Text", "Value"),
+                htmlAttributes: new { @id = "SlotFilter", @class = "form-control col-md-4"})
                 </div>
             }
             else
             {
-                @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        <input type="date" class="form-control datepicker" asp-for="booking_date" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
-                        <span asp-validation-for="booking_date" class=" alert-danger"></span>
-                    </div>
+                    @Html.LabelFor(model => model.booking_date, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <input type="date" class="form-control datepicker" asp-for="booking_date" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
+                    <span asp-validation-for="booking_date" class=" alert-danger"></span>
                 </div>
-                @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="form-group col-md-6">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
-                    htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-2", @disabled=true})
-                    </div>
+                    @Html.LabelFor(model => model.slot, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.DropDownListFor(model => model.slot, new SelectList(ViewBag.lstSlot, "Text", "Value"),
+                htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled=true})
                 </div>
             }
-            @if (ViewBag.ApproveTotal == (int)StatusSending.Process)
-            {
-                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill">Xác nhận</i></button>
-            }
-            else if (ViewBag.Admin)
-            {
-                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill">Xác nhận</i></button>
-            }
-            <a asp-controller="Reservation" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
-
+             <div class="text-center mt-3">
+                @if (ViewBag.ApproveTotal == (int)StatusSending.Process || ViewBag.Admin)
+                {
+                    <button type="submit" class="btn btn-lg btn-outline-primary px-4 py-2 mx-2"><i class="bi bi-save"></i> Accepted</button>
+                }
+                <a asp-controller="Reservation" asp-action="Index" class="btn btn-lg btn-outline-warning px-4 py-2">Back</a>
+            </div>
     </form>
 
 </div>
 
 
-@*//for front end validations*@
-<script>
-    document.getElementById("birthDateInput").addEventListener("change", function () {
-        // Gọi hàm xử lý khi có sự thay đổi giá trị
-        debugger;
-        callAPIBooking();
-    });
-    function callAPIBooking() {
-        var birthDate = document.getElementById("birthDateInput").value;
-        var doctorId = $('#DoctorSelected').val();
-        var url = "/api/GetData/callAPIBooking?bookingDate=" + birthDate + "&idDoctor=" + doctorId;
-        // Gọi API bằng Ajax
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            //data: { country: countryParam },
-            success: function (response) {
-                $("#SlotFilter").html(""); //
-                $.each(response, function (i, statetest) {
-                    $("#SlotFilter").append(
-                        $('<option></option>').val(statetest.text).html(statetest.value));
-                });
-
-                // Xử lý dữ liệu trả về từ API
-                // Ví dụ: gán giá trị cho các trường khác trên trang
-            },
-            error: function (xhr, status, error) {
-                // Xử lý lỗi khi gọi API
-                console.log(error);
-            }
-        });
-    }
-    function FillState(val) {
-        var url = "/api/GetData/GetChildren?parentId=" + val;
-        var countryParam = $('#profileCountry').val();
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "JSON",
-            data: { country: countryParam },
-            success: function (states) {
-                debugger;
-                $("#profileState").html(""); // clear before appending new list
-                $.each(states, function (i, statetest) {
-                    $("#profileState").append(
-                        $('<option></option>').val(statetest.text).html(statetest.value));
-                });
-            }
-        });
-
-    }
-                                            //$('#Parent').change(function () {
-                                            //    var selectedValue = $(this).val();
-                                            //    $('#parent_id').val(selectedValue);
-
-                                            //    $('#Doctor').change(function () {
-                                            //        var selectedValue = $(this).val();
-                                            //        $('#doctor_id').val(selectedValue);
-
-                                            //    });
-                                            //    $('#profileCountry').change(function () {
-                                            //        var selectedValue = $(this).val();
-                                            //        $('#child_id').val(selectedValue);
-
-                                            //    });
-</script>
-
-@section Scripts{
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}
