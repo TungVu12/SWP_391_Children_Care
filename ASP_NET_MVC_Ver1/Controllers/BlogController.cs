@@ -10,6 +10,11 @@ namespace ASP_NET_MVC_Ver1.Controllers
     public class BlogController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _uid;
+        bool isAdmin = false;
+        bool isDoctor = false;
+        bool isParent = false;
+        string idUser;
 
         public BlogController(ApplicationDbContext context)
         {
