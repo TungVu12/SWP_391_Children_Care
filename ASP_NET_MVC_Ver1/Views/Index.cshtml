@@ -90,8 +90,42 @@
                 <div class="card bg-info text-white text-center p-3">
                     <h5 class="card-title">Examination</h5>
                     <p class="card-number">@ViewBag.Examination</p> <!-- Chữ số thống kê -->
-                
                 </div>
             </div>
         </div>
     </div>
+
+    <section id="content">
+        <!-- Nội dung của trang quản trị sẽ hiển thị ở đây -->
+    </section>
+
+    <!-- Thêm các biểu đồ và slide show tại đây -->
+    <script>
+        // JavaScript code...
+
+        function showDashboard() {
+            document.getElementById("content").innerHTML = `
+                                            <div>
+                                                <h3>Biểu đồ dạng cột</h3>
+                                                        <canvas id="columnLineChart" width="400" height="200"></canvas>
+                                            </div>
+                                             <div>
+                                                <h3>Biểu đồ dạng cột chữ nhật</h3>
+                                                <canvas id="groupedBarChart" width="400" height="200"></canvas>
+                                            </div>
+                                        `;
+
+            //Khởi tạo hiển thị biểu đồ
+            showMixedChart();
+            showGroupedBarChart();
+        }
+
+        function getEnglishMonthName(monthNumber) {
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            return monthNames[monthNumber - 1];
+            //  Các month
+
+        }
