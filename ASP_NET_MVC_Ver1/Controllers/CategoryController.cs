@@ -29,7 +29,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         {
             Category category = new Category();
             idUser = _userManager.GetUserId(HttpContext.User);
-            category.Creator = idUser;
+            category.CreateId = idUser;
             category.Description = "";
             return View(category);
         }
@@ -56,7 +56,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         public IActionResult Create(Category empobj)
         {
             idUser = _userManager.GetUserId(HttpContext.User);
-            empobj.Creator = idUser;
+            empobj.CreateId = idUser;
             if (ModelState.IsValid)
             {
 

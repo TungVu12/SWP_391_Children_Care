@@ -47,18 +47,18 @@
                 <span asp-validation-for="Title" class="alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
-                <input type="text" class="form-control mb-3 col-md-8" asp-for="Description" placeholder="Enter Content">
-                <span asp-validation-for="Description" class="alert-danger"></span>
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-4" })
+                <input type="text" class="form-control mb-3 col-md-8" asp-for="Content" placeholder="Enter Content">
+                <span asp-validation-for="Content" class="alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
                 <input type="text" class="form-control mb-3 col-md-8" asp-for="Description" placeholder="Enter Description">
             </div>
             <div class="form-group col-md-6">
-                 @Html.HiddenFor(model => model.Creator)
+                 @Html.HiddenFor(model => model.CreateId)
                 @*@Html.LabelFor(model => model.CreateId, htmlAttributes: new { @class = "control-label col-md-4" })*@
-                <input type="text" class="form-control mb-3 col-md-8" asp-for="Creator" placeholder="Enter Description" hidden = true">
+                <input type="text" class="form-control mb-3 col-md-8" asp-for="CreateId" placeholder="Enter Description" hidden = true">
             </div>
         </div>
         <div class="text-center">

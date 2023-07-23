@@ -47,14 +47,14 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 int recordsTotal = 0;
                 //var customerData = (from tempcustomer in _context.Childrens select tempcustomer);
                 var customerData = from tempcustomer in _context.Categories
-                                   join usersTable in _uid.Users on tempcustomer.Creator equals usersTable.Id into tempTable
+                                   join usersTable in _uid.Users on tempcustomer.CreateId equals usersTable.Id into tempTable
                                    from leftJoinData in tempTable.DefaultIfEmpty()
                                    select new
                                    {
                                        // Chọn các trường từ bảng Childrens và OtherTable
                                        tempcustomer.Id,
                                        tempcustomer.Title,
-                                       tempcustomer.Description,
+                                       tempcustomer.Content,
                                        //tempcustomer.Description,
                                        // Thêm các trường khác từ OtherTable
                                        leftJoinData.FirstName,
@@ -66,7 +66,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    customerData = customerData.Where(m => m.Title.Contains(searchValue) || m.Description.Contains(searchValue));
+                    customerData = customerData.Where(m => m.Title.Contains(searchValue) || m.Content.Contains(searchValue));
                 }
 
                 recordsTotal = customerData.Count();
