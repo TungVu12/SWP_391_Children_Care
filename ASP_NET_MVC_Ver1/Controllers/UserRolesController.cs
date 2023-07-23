@@ -41,13 +41,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Manage(string userId)
+        public async Task<IActionResult> Manage(string Id)
         {
-            ViewBag.userId = userId;
-            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.userId = Id;
+            var user = await _userManager.FindByIdAsync(Id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                ViewBag.ErrorMessage = $"User with Id = {Id} cannot be found";
                 return View("NotFound");
             }
             ViewBag.UserName = user.UserName;
@@ -69,13 +69,14 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 //}
                 model.Add(userRolesViewModel);
             }
+            //return RedirectToAction("Index", "UserRoles");
             return View(model);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
+        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string Id)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(Id);
             if (user == null)
             {
                 return View();
@@ -95,6 +96,5 @@ namespace ASP_NET_MVC_Ver1.Controllers
             }
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -184,11 +184,11 @@ namespace ASP_NET_MVC_Ver1.Controllers
             List<SelectListItem> lstDoctor = new List<SelectListItem>();
             foreach (var doctor in filterDoctor)
             {
-                if (doctor.Id.ToString() == empfromdb.doctor_id.ToString())
-                {
-                    lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
+                    if (doctor.Id.ToString() == empfromdb.doctor_id.ToString())
+                    {
+                        lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
 
-                }
+                    }
             }
 
             var getDataParent = await _uid.GetUsersInRoleAsync(Roles.Parent.ToString());
@@ -219,15 +219,15 @@ namespace ASP_NET_MVC_Ver1.Controllers
             {
                 if (child.Id.ToString() == empfromdb.child_id)
                 {
-                    lstChildrens.Add(new SelectListItem { Text = child.Id.ToString(), Value = child.FullName.ToString() });
+                        lstChildrens.Add(new SelectListItem { Text = child.Id.ToString(), Value = child.FullName.ToString() });
                 }
             }
 
             List<SelectListItem> slots = new List<SelectListItem>();
             List<Reservation> reservations = _context.Reservations.ToList();
-            foreach (var reservation in reservations)
+            foreach(var reservation in reservations)
             {
-                if (reservation.Id.ToString() == empfromdb.reservation_id)
+                if(reservation.Id.ToString() == empfromdb.reservation_id)
                 {
                     slots.Add(new SelectListItem { Text = reservation.Id.ToString(), Value = "Slot " + reservation.slot.ToString() + " Date: " + reservation.booking_date?.ToString("MM/dd/yyyy") });
                 }

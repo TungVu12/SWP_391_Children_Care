@@ -44,6 +44,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         public IActionResult Contact()
         {
+            //testc commit
             return View();
         }
     }
