@@ -46,5 +46,35 @@ namespace ASP_NET_MVC_Ver1.Controllers
                                            new List<string>()
                                    };
 
+
+                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                //{
+                //    if (sortColumnDirection == "desc")
+                //    {
+                //        customerData = customerData.OrderByDescending(x => EF.Property<object>(x, sortColumn));
+                //    }
+                //    else
+                //    {
+                //        customerData = customerData.OrderBy(x => EF.Property<object>(x, sortColumn));
+                //    }
+                //}
+
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    customerData = customerData.Where(m => m.FirstName.Contains(searchValue) || m.LastName.Contains(searchValue));
+                }
+
+                recordsTotal = customerData.Count();
+                int sttCounter = skip + 1;
+                var data = customerData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+    }
 }
