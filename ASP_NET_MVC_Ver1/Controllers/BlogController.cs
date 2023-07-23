@@ -14,11 +14,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         bool isAdmin = false;
         bool isDoctor = false;
         bool isParent = false;
-        //tessdsvdfxesdws
-        //sdfdedved
         string idUser;
-
-        //hi
 
         public BlogController(ApplicationDbContext context)
         {
