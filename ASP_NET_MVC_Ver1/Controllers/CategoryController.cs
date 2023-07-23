@@ -16,11 +16,31 @@ namespace ASP_NET_MVC_Ver1.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+
+
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult Index()
         {
             IEnumerable<Category> objCatlist = _context.Categories;
             return View(objCatlist);
+        }
+        public IActionResult Viewing(Guid Id)
+        {
+            {
+                if (Id == null)
+                {
+                    return NotFound();
+                }
+                var empfromdb = _context.Categories.Find(Id);
+
+                if (empfromdb == null)
+                {
+                    return NotFound();
+                }
+                return View(empfromdb);
+            }
+
         }
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
         public IActionResult Create()
@@ -45,7 +65,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View(empobj);
         }
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
-        public IActionResult Edit(Guid Id)
+        public IActionResult Edit(Guid? Id)
         {
             if (Id == null)
             {
@@ -94,7 +114,6 @@ namespace ASP_NET_MVC_Ver1.Controllers
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult DeleteEmp(Guid Id)
         {
-            //day la commetn phan xoa
             var deleterecord = _context.Categories.Find(Id);
             if (deleterecord == null)
             {
@@ -105,7 +124,6 @@ namespace ASP_NET_MVC_Ver1.Controllers
             TempData["ResultOk"] = "Thông tin xoá thành công !";
             return RedirectToAction("Index");
         }
-
     }
 }
 
