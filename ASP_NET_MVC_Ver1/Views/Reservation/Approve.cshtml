@@ -227,7 +227,7 @@
                 htmlAttributes: new { @id = "profileCountry", @class = "form-control col-md-4", @disabled=true})
                 </div>
             }
-             <div class="text-center mt-3">
+            <div class="text-center mt-3">
                 @if (ViewBag.ApproveTotal == (int)StatusSending.Process || ViewBag.Admin)
                 {
                     <button type="submit" class="btn btn-lg btn-outline-primary px-4 py-2 mx-2"><i class="bi bi-save"></i> Accepted</button>
@@ -239,3 +239,76 @@
 </div>
 
 
+@*//for front end validations*@
+<script>
+    document.getElementById("birthDateInput").addEventListener("change", function () {
+        // Gọi hàm xử lý khi có sự thay đổi giá trị
+        debugger;
+        callAPIBooking();
+    });
+    function callAPIBooking() {
+        var birthDate = document.getElementById("birthDateInput").value;
+        var doctorId = $('#DoctorSelected').val();
+        var url = "/api/GetData/callAPIBooking?bookingDate=" + birthDate + "&idDoctor=" + doctorId;
+        // Gọi API bằng Ajax
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            //data: { country: countryParam },
+            success: function (response) {
+                $("#SlotFilter").html(""); //
+                $.each(response, function (i, statetest) {
+                    $("#SlotFilter").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
+
+                // Xử lý dữ liệu trả về từ API
+                // Ví dụ: gán giá trị cho các trường khác trên trang
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi khi gọi API
+                console.log(error);
+            }
+        });
+    }
+    function FillState(val) {
+        var url = "/api/GetData/GetChildren?parentId=" + val;
+        var countryParam = $('#profileCountry').val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "JSON",
+            data: { country: countryParam },
+            success: function (states) {
+                debugger;
+                $("#profileState").html(""); // clear before appending new list
+                $.each(states, function (i, statetest) {
+                    $("#profileState").append(
+                        $('<option></option>').val(statetest.text).html(statetest.value));
+                });
+            }
+        });
+
+    }
+                                                                                                                        //$('#Parent').change(function () {
+                                                                                                                        //    var selectedValue = $(this).val();
+                                                                                                                        //    $('#parent_id').val(selectedValue);
+
+                                                                                                                        //    $('#Doctor').change(function () {
+                                                                                                                        //        var selectedValue = $(this).val();
+                                                                                                                        //        $('#doctor_id').val(selectedValue);
+
+                                                                                                                        //    });
+                                                                                                                        //    $('#profileCountry').change(function () {
+                                                                                                                        //        var selectedValue = $(this).val();
+                                                                                                                        //        $('#child_id').val(selectedValue);
+
+                                                                                                                        //    });
+</script>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
