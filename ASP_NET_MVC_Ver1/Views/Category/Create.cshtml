@@ -16,13 +16,13 @@
                 <span asp-validation-for="Title" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Content">Content</label>
+                <label asp-for="Content">Description</label>
                 <input type="text" class="form-control mb-3" asp-for="Content" placeholder="Content">
                 <span asp-validation-for="Content" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="CreateId">ID người tạo</label>
-                <input type="text" class="form-control mb-3" asp-for="CreateId" value="@ViewBag.UserId">
+                <label asp-for="Creator">CreatorID</label>
+                <input type="text" class="form-control mb-3" asp-for="Creator" value="@ViewBag.UserId" readonly>
                 @*@ViewBag.UserId*@
             </div>
         </div>

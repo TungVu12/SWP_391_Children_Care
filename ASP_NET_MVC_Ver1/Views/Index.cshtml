@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Add this script after the Chart.js script -->
+
+
+    <title>Admin manager</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .menu-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #777;
+            cursor: pointer;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        /* CSS style cho chữ số thống kê */
+        .card-number {
+            font-size: 28px; /* Kích thước chữ số tăng lên */
+            font-weight: bold; /* Đậm */
+            color: #fff; /* Màu chữ số là trắng */
+            background-color: rgba(0, 0, 0, 0.7); /* Màu nền của chữ số, sử dụng rgba để làm màu nền hơi mờ */
+            padding: 5px 10px; /* Khoảng cách giữa chữ số và viền nền */
+            border-radius: 5px; /* Bo tròn viền nền */
+        }
+
+        /* CSS style cho mã màu của card */
+        .bg-primary {
+            background-color: #007BFF; /* Màu xanh lam sáng */
+        }
+
+        .bg-success {
+            background-color: #28A745; /* Màu xanh lá cây sáng */
+        }
+
+        .bg-info {
+            background-color: #17A2B8; /* Màu xanh dương sáng */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin manager</h1>
+    </header>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3 mb-3" onclick="showDashboard()">
+                <div class="card bg-primary text-white text-center p-3">
+                    <h5 class="card-title">Doctor</h5>
+                    <p class="card-number">@ViewBag.DoctorLst</p> <!-- Chữ số thống kê -->
+                </div>
+            </div>
+            <div class="col-md-3 mb-3" onclick="showDashboard()">
+                <div class="card bg-success text-white text-center p-3">
+                    <h5 class="card-title">Parent</h5>
+                    <p class="card-number">@ViewBag.ParentLst</p> <!-- Chữ số thống kê -->
+                </div>
+            </div>
+            <div class="col-md-3 mb-3" onclick="showDashboard()">
+                <div class="card bg-info text-white text-center p-3">
+                    <h5 class="card-title">Booking</h5>
+                    <p class="card-number">@ViewBag.Reservation</p> <!-- Chữ số thống kê -->
+                </div>
+            </div>
+            <div class="col-md-3 mb-3" onclick="showDashboard()">
+                <div class="card bg-info text-white text-center p-3">
+                    <h5 class="card-title">Examination</h5>
+                    <p class="card-number">@ViewBag.Examination</p> <!-- Chữ số thống kê -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="content">
+        <!-- Nội dung của trang quản trị sẽ hiển thị ở đây -->
+    </section>
+
+    <!-- Thêm các biểu đồ và slide show tại đây -->
+    <script>
+        // JavaScript code...
+
+        function showDashboard() {
+            document.getElementById("content").innerHTML = `
+                                            <div>
+                                                <h3>Biểu đồ dạng cột</h3>
+                                                        <canvas id="columnLineChart" width="400" height="200"></canvas>
+                                            </div>
+                                             <div>
+                                                <h3>Biểu đồ dạng cột chữ nhật</h3>
+                                                <canvas id="groupedBarChart" width="400" height="200"></canvas>
+                                            </div>
+                                        `;
+
+            //Khởi tạo hiển thị biểu đồ
+            showMixedChart();
+            showGroupedBarChart();
+        }
+
+        function getEnglishMonthName(monthNumber) {
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            return monthNames[monthNumber - 1];
+            //  Các month
+
+        }
+
+        function showMixedChart() {
+            //Hàm MixedChart
+            var ctx = document.getElementById('columnLineChart').getContext('2d');
+            var chartData = @Html.Raw(Json.Serialize(ViewBag.ChartData));
+            var labels = chartData.map((_, index) => getEnglishMonthName(index + 1));
+
+            var mixedChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Column Chart',
+                        data: chartData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Line Chart',
+                        data: chartData,
+                        type: 'line',
+                        fill: false,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
