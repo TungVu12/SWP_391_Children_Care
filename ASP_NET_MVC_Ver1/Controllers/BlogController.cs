@@ -16,6 +16,8 @@ namespace ASP_NET_MVC_Ver1.Controllers
         bool isParent = false;
         string idUser;
 
+        //hi
+
         public BlogController(ApplicationDbContext context)
         {
             _context = context;
