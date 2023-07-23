@@ -63,7 +63,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                                        leftJoinData.LastName
                                    };
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
-                {   
+                {
                     //customerData = customerData.OrderBy(tempcustomer => tempcustomer.GetType().GetProperty(sortColumn).GetValue(tempcustomer, null));
                     customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
@@ -71,7 +71,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 {
                     customerData = customerData.Where(m => m.FullName.Contains(searchValue));
                 }
-                if (isParent)
+                if (isParent & !isAdmin)
                 {
                     customerData = customerData.Where(m => m.parent_id == idUser.ToString());
                 }
@@ -88,7 +88,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 throw;
             }
         }
-        
+
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
         [HttpDelete]
         [Route("DeleteEmp")]
