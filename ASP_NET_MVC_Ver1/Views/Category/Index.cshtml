@@ -18,10 +18,10 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="col" width="120px" style="text-align: center">C_Id</th>
-                <th scope="col" width="120px" style="text-align: center">Creator_Id</th>
-                <th scope="col" width="120px" style="text-align: center">Category</th>
-                <th scope="col" width="100px" style="text-align: center">Detail</th>
+                <th scope="col" width="120px" style="text-align: center">Id</th>
+                <th scope="col" width="120px" style="text-align: center">CreatorID</th>
+                <th scope="col" width="120px" style="text-align: center">Title</th>
+                <th scope="col" width="100px" style="text-align: center">Description</th>
             </tr>
         </thead>
         <tbody>
@@ -32,18 +32,18 @@
                         @item.Id
                     </td>
                     <td width="20px">
-                        @item.CreateId
+                        @item.Creator
                     </td>
                     <td width="20px">
                         @item.Title
                     </td>
                     <td width="20px">
                         @item.Content
-                    </td>                    
+                    </td>
                     <td>
                         <div role="group" class="w-60 btn-group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>&nbsp;
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Delete</a>
                         </div>
                     </td>
                 </tr>

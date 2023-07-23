@@ -83,6 +83,10 @@
                                 {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">Permission</a>
                                 }
+                                @if (isAdmin)
+                                {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Create" asp-action="Index">Category</a>
+                                }
                                 @if (isAdmin || isDoctor || isParent)
                                 {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Children" asp-action="Index">Children</a>

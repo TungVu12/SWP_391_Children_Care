@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using static System.Formats.Asn1.AsnWriter;
 
 
 namespace ASP_NET_MVC_Ver1.Models
@@ -11,14 +12,12 @@ namespace ASP_NET_MVC_Ver1.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string CreateId { get; set; }
+        public string Creator { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
         [DefaultValue(null)]
         public string Description { get; set; }
-
-
     }
 }
