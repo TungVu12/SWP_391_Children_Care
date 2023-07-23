@@ -1,8 +1,10 @@
 ﻿using ASP_NET_MVC_Ver1.Areas.Identity.Data;
 using ASP_NET_MVC_Ver1.Enum;
 using ASP_NET_MVC_Ver1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ASP_NET_MVC_Ver1.Controllers
 {
@@ -16,6 +18,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             _context = context;
             _uid = userManager;
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             List<Reservation> ReservationLst = _context.Reservations.ToList();
