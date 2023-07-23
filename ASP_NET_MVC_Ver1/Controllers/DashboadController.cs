@@ -3,6 +3,7 @@ using ASP_NET_MVC_Ver1.Enum;
 using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ASP_NET_MVC_Ver1.Controllers
 {
@@ -18,4 +19,45 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
         public async Task<IActionResult> Index()
         // day la ham Task
+
+
+            public async Task<IActionResult> Index()
+        {
+            List<Reservation> ReservationLst = _context.Reservations.ToList();
+            List<Examination> examinations = _context.Examination.ToList();
+            var getData = await _uid.GetUsersInRoleAsync(Roles.Parent.ToString());
+            var DoctorL = await _uid.GetUsersInRoleAsync(Roles.Doctor.ToString());
+            var ParentLst = getData.Where(c => c.Email != "admin@gmail.com").ToList();
+            var DoctorLst = DoctorL.Where(c => c.Email != "admin@gmail.com").ToList();
+
+            ViewBag.Reservation = ReservationLst.ToList().Count;
+            ViewBag.Examination = examinations.ToList().Count;
+            ViewBag.ParentLst = ParentLst.ToList().Count;
+            ViewBag.DoctorLst = DoctorLst.ToList().Count;
+
+
+            Dictionary<int, int> monthlyCounts = new Dictionary<int, int>();
+
+            // Lặp qua danh sách ReservationLst và tính tổng số lượt đặt chỗ của mỗi tháng
+            foreach (var reservation in ReservationLst)
+            {
+                if (reservation.booking_date.HasValue)
+                {
+                    // Lấy tháng từ booking_date (sử dụng thuộc tính Value để lấy giá trị từ nullable DateTime)
+                    int month = reservation.booking_date.Value.Month;
+
+                    if (monthlyCounts.ContainsKey(month))
+                    {
+                        monthlyCounts[month] += 1; // Cộng thêm 1 lượt đặt chỗ vào tháng đã tồn tại trong Dictionary
+                    else
+                        {
+                            monthlyCounts[month] = 1; // Thêm tháng mới vào Dictionary với số lượt đặt chỗ là 1
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+        
+    
