@@ -66,7 +66,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    customerData = customerData.Where(m => m.Title.Contains(searchValue) || m.Content.Contains(searchValue));
+                    customerData = customerData.Where(m => m.Title.Contains(searchValue) || m.Description.Contains(searchValue));
                 }
 
                 recordsTotal = customerData.Count();
