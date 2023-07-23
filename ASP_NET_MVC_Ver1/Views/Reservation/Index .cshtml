@@ -1,0 +1,23 @@
+﻿@using ASP_NET_MVC_Ver1.Common;
+@model IEnumerable<Reservation>
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="node_modules/antd/dist/antd.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+@if (TempData["ResultOk"] != null)
+{
+    <div id="alert-div" class="alert alert-success position-fixed top-0 end-0 border border-success rounded-pill py-2 px-3" style="max-width: 450px;">
+        <span class="fw-bold" style="font-size: 16px;">@TempData["ResultOk"]</span>
+        <button type="button" class="btn-close float-start" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script>
+        // Get the alert element
+        var alertDiv = document.getElementById("alert-div");
+
+        // Wait for 5 seconds and then hide the alert
+        setTimeout(function () {
+            alertDiv.style.display = "none";
+        }, 3000);
+    </script>
+}
