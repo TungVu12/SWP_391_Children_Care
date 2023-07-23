@@ -1,77 +1,125 @@
 ﻿@using ASP_NET_MVC_Ver1.Common;
 @model IEnumerable<Reservation>
-
-@{
-    ViewData["Title"] = "Index";
-}
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="node_modules/antd/dist/antd.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 @if (TempData["ResultOk"] != null)
 {
-    <h1 class="alert-success">@TempData["ResultOk"]</h1>
-}
-
-<div class="container shadow p-5">
-
-
-    <div class="col mb-3">
-        <a asp-controller="Reservation" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm lịch hẹn khám</a>
+    <div id="alert-div" class="alert alert-success position-fixed top-0 end-0 border border-success rounded-pill py-2 px-3" style="max-width: 450px;">
+        <span class="fw-bold" style="font-size: 16px;">@TempData["ResultOk"]</span>
+        <button type="button" class="btn-close float-start" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th scope="col">ID lịch hẹn</th>
-                <th scope="col">ID phụ huynh</th>
-                <th scope="col">ID trẻ khám</th>
-                <th scope="col">Nội dung chẩn đoán</th>
-                <th scope="col">Ngày khám dự kiến</th>
-                <th scope="col">Trạng thái lịch</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Any())
-            {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                       @* <td width="20%">
-                            @item.Id
-                        </td>*@
-                        <td width="20%">
-                            @item.parent_id
-                        </td>
-                        <td width="25%">
-                            @item.child_id
-                        </td>
-                        <td width="20%">
-                            @item.doctor_id
-                        </td>
-                        <td width="20%">
-                            @item.booking_date
-                        </td>
-                        <td width="20%">
-                            @item.status.GetDisplayName()
-                        </td>
-                        @*  <td width="20%">
-                @(item.status == 1 ? "active" : item.status != 1 ? "fail" : "")
-                </td>*@
-                        <td>
-                            <div role="group" class="w-60 btn-group">
-                                @if (ViewBag.Admin || ViewBag.Doctor)
-                                {
-                                    <a asp-controller="Reservation" asp-action="Approve" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Phê duyệt</a>
-                                    <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
-                                }
-                                else if (ViewBag.Parent)
-                                {
-                                    <a asp-controller="Reservation" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa </a>
-                                    <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Huỷ lịch</a>
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+
+    <script>
+        // Get the alert element
+        var alertDiv = document.getElementById("alert-div");
+
+        // Wait for 5 seconds and then hide the alert
+        setTimeout(function () {
+            alertDiv.style.display = "none";
+        }, 3000);
+    </script>
+}
+<style>
+    .btn-custom-sea {
+        background-color: #0077be; /* Thay đổi mã màu tại đây */
+        background-image: linear-gradient(#0077be, #00bfff); /* Thêm hiệu ứng gradient */
+        color: #fff; /* Thay đổi màu chữ */
+        border-color: #0077be; /* Thay đổi màu đường viền */
+    }
+    /* styles.css */
+    .ant-table {
+        width: 100%;
+    }
+
+        .ant-table th,
+        .ant-table td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .ant-table thead th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+    .ant-table-bordered th,
+    .ant-table-bordered td {
+        border: 1px solid #f0f0f0;
+    }
+
+    .ant-table-striped tbody > tr:nth-child(odd) {
+        background-color: #fafafa;
+    }
+
+    .ant-table-responsive {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+        .custom-table thead th {
+            background-color: #0079BF;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .custom-table tbody td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #D6EAF8;
+        }
+
+    .table td {
+        vertical-align: middle; /* Căn giữa dọc các ô dữ liệu */
+    }
+    // Css check 
+
+</style>
+<div class="col m-3">
+    <a asp-controller="Reservation" asp-action="Create" class="btn btn-custom-sea btn-outline btn-hover"><i class="bi bi-plus-square bi-4x"></i> Add Reservation</a>
 </div>
+<div class="container ">
+    <br />
+    <div class="table-responsive" style="width:90%; margin:0 auto;">
+        <table id="customerDatatable" class="ant-table ant-table-bordered ant-table-striped ant-table-responsive custom-table" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>STT</th>
+                    <th>Doctor Name</th>
+                    <th>Parent Name</th>
+                    <th>Children Name</th>
+                    <th>Category</th>
+                    <th>Booking Date</th>
+                    <th>Status Booking</th>
+                    <th>Status Examination</th>
+                    <th></th>
+                    <th></th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section Scripts
+    {
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/reservationdatatable.js"></script>
+}

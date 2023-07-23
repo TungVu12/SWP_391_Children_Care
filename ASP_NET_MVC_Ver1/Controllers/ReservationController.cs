@@ -1,4 +1,5 @@
 ﻿using ASP_NET_MVC_Ver1.Areas.Identity.Data;
+using ASP_NET_MVC_Ver1.Common;
 using ASP_NET_MVC_Ver1.Enum;
 using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,10 +26,12 @@ namespace ASP_NET_MVC_Ver1.Controllers
         //bool isDoctor = User.IsInRole(Roles.Doctor.ToString());
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            isAdmin = User.IsInRole(Roles.Admin.ToString());
-            isDoctor = User.IsInRole(Roles.Doctor.ToString());
-            isParent = User.IsInRole(Roles.Parent.ToString());
+            var role = false;
+            isAdmin = User.IsInRole(Roles.Admin.ToString()) ? true : false;
+            isDoctor = User.IsInRole(Roles.Doctor.ToString()) ? true : false;
+            isParent = User.IsInRole(Roles.Parent.ToString()) ? true : false;
             idUser = _uid.GetUserId(HttpContext.User);
+
             ViewBag.Admin = isAdmin;
             ViewBag.Doctor = isDoctor;
             ViewBag.Parent = isParent;
@@ -63,7 +67,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int pageNumber)
         {
             List<Reservation> ReservationLst = _context.Reservations.ToList();
 
@@ -115,13 +119,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
                                 // Hoặc có thể tạo một thuộc tính mới trong Reservation để lưu trữ tên của Children
                             };
 
-            List<Reservation> updatedReservationLst = joinTable.ToList();
+            List<Reservation> datas = joinTable.ToList();
+            
 
+            return View(datas);
 
-
-            var result = new List<Reservation>();
-            result = updatedReservationLst.ToList();
-            return View(result);
+            //return View(reservations);
+            //return View(await PaginatedList<Reservation>.CreateAsync(reservations, pageNumber ?? 1, pageSize));
 
         }
 
@@ -146,6 +150,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             else if (isDoctor)
             {
                 var resultModel = _uid.GetUserAsync(HttpContext.User);
+                ViewBag.doctorId = resultModel.Result.Id.ToString();
                 ViewBag.doctorName = resultModel.Result.FirstName + resultModel.Result.LastName;
             }
 
@@ -217,11 +222,12 @@ namespace ASP_NET_MVC_Ver1.Controllers
         public IActionResult Create(Reservation empobj)
         {
             empobj.create_date = DateTime.Now;
-            if (isParent)
+            List<Reservation> ReservationLst = _context.Reservations.ToList();
+            if (isParent && !isAdmin)
             {
                 empobj.parent_id = idUser;
             }
-            else if (isDoctor)
+            else if (isDoctor && !isAdmin)
             {
                 empobj.doctor_id = idUser;
             }
@@ -237,7 +243,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public async Task<IActionResult> Approve(Guid? Id)
         {
             if (Id == null)
@@ -247,6 +253,19 @@ namespace ASP_NET_MVC_Ver1.Controllers
             var empfromdb = _context.Reservations.Find(Id);
             ApproveTotal = (int)empfromdb.status;
             ViewBag.ApproveTotal = ApproveTotal;
+
+            var getData = await _uid.GetUsersInRoleAsync(Roles.Doctor.ToString());
+            var filterParent = getData.Where(c => c.Email != "admin@gmail.com").ToList();
+            List<SelectListItem> lstDoctor = new List<SelectListItem>();
+            foreach (var doctor in filterParent)
+            {
+                if (doctor.Id.ToString() != null)
+                {
+                    lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
+
+                }
+            }
+            ViewBag.doctor_lst = lstDoctor;
 
             List<Children> childrens = _context.Childrens.ToList();
             List<SelectListItem> lstChildrens = new List<SelectListItem>();
@@ -281,18 +300,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
             ViewBag.category_lst = category;
 
 
-            var getData = await _uid.GetUsersInRoleAsync(Roles.Doctor.ToString());
-            var filterParent = getData.Where(c => c.Email != "admin@gmail.com").ToList();
-            List<SelectListItem> lstDoctor = new List<SelectListItem>();
-            foreach (var doctor in filterParent)
-            {
-                if (doctor.Id.ToString() != null)
-                {
-                    lstDoctor.Add(new SelectListItem { Text = doctor.Id.ToString(), Value = doctor.FirstName.ToString() + " " + doctor.LastName.ToString() });
 
-                }
-            }
-            ViewBag.doctor_lst = lstDoctor;
 
             var getData1 = await _uid.GetUsersInRoleAsync(Roles.Parent.ToString());
             var filterParent1 = getData1.Where(c => c.Email != "admin@gmail.com").ToList();
@@ -315,9 +323,14 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public IActionResult Approve(Reservation empobj)
         {
+            //if (empobj.slot == null)
+            //{
+            //    var slot = _context.Reservations.Find(empobj.Id);
+            //    empobj.slot = slot.slot;
+            //}
             if (ModelState.IsValid)
             {
                 _context.Reservations.Update(empobj);
@@ -331,7 +344,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Parent")]
+        [Authorize(Roles = "Admin, Parent")]
         public async Task<IActionResult> Edit(Guid? Id)
         {
             if (Id == null)

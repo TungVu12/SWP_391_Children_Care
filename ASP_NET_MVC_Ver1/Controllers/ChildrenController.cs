@@ -91,8 +91,8 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost]
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult Create(Children empobj)
         {
@@ -125,14 +125,36 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View(empobj);
         }
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public IActionResult Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
             var empfromdb = _context.Childrens.Find(id);
+            if (isAdmin || isDoctor)
+            {
+                var getData = await _uid.GetUsersInRoleAsync(Roles.Parent.ToString());
+                var filterParent = getData.Where(c => c.Email != "admin@gmail.com").ToList();
+                List<SelectListItem> listForSelect = new List<SelectListItem>();
+                foreach (var parent in filterParent)
+                {
+                    if (parent.Id.ToString() != null)
+                    {
+                        listForSelect.Add(new SelectListItem { Text = parent.Id.ToString(), Value = parent.FirstName.ToString() + " " + parent.LastName.ToString() });
 
+                    }
+                }
+                ViewBag.parent_lst = listForSelect;
+
+            }
+            else
+            {
+                var resultModel = _uid.GetUserAsync(HttpContext.User);
+                ViewBag.parentName = resultModel.Result.FirstName + resultModel.Result.LastName;
+
+
+            }
             if (empfromdb == null)
             {
                 return NotFound();
@@ -140,11 +162,15 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View(empfromdb);
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost]
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult Edit(Children empobj)
         {
+            if (isParent)
+            {
+                empobj.parent_id = idUser;
+            }
             if (ModelState.IsValid)
             {
                 _context.Childrens.Update(empobj);
@@ -172,8 +198,8 @@ namespace ASP_NET_MVC_Ver1.Controllers
             return View(empfromdb);
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpDelete]
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
         public IActionResult DeleteEmp(Guid? id)
         {

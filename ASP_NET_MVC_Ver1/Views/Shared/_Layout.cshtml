@@ -83,9 +83,16 @@
                                 {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">Permission</a>
                                 }
+                                @if (isAdmin)
+                                {
+                                }
                                 @if (isAdmin || isDoctor || isParent)
                                 {
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Children" asp-action="Index">Children</a>
+                                }
+                                 @if (isAdmin || isDoctor || isParent)
+                                {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
                                 }
                                 @if (isAdmin || isDoctor || isParent)
                                 {
@@ -184,10 +191,12 @@
     <script src="~/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <script src="~/js/main.js"></script>
+  @*  <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>*@
  @*   <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>*@
-    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    @*<script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>*@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
