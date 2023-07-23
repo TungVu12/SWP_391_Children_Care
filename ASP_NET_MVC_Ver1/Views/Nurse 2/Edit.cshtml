@@ -1,0 +1,88 @@
+﻿@*@model Examination
+
+<div class="container shadow p-5">
+    <div class="row pb-2">
+        <h2>Sửa thông tin bé</h2>
+    </div>
+
+    <form method="post">
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="RegistrationDate">Ngày đăng ký</label>
+                <input type="datetime-local" class="form-control mb-3" asp-for="RegistrationDate" placeholder="Nhap theo fomat dd/MM/yyyy">
+                <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="ChilderName">Họ và tên đệm bé</label>
+                <input type="text" class="form-control mb-3" asp-for="ChilderName" placeholder="Nhập họ và tên đệm">
+                <span asp-validation-for="ChilderName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="ParentName">Họ và tên đệm người giám hộ</label>
+                <input type="text" class="form-control mb-3" asp-for="ParentName" placeholder="Nhập họ và tên đệm">
+                <span asp-validation-for="ParentName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PhoneNumber">Số điện thoại</label>
+                <input type="text" class="form-control mb-3" asp-for="PhoneNumber" placeholder="Nhập số điện thoại">
+                <span asp-validation-for="PhoneNumber" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Sex">Giới tính bé</label>
+                <input type="text" class="form-control mb-3" asp-for="Sex" placeholder="Nhập tên bé">
+                <span asp-validation-for="Sex" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+                <label asp-for="DateOfBirth">Ngày tháng năm sinh</label>
+                <input type="datetime-local" class="form-control" asp-for="DateOfBirth">
+                <span asp-validation-for="DateOfBirth" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Email">Địa chỉ email</label>
+                <input type="text" class="form-control mb-3" asp-for="Email" placeholder="Nhập email">
+                <span asp-validation-for="Email" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Address">Địa chỉ</label>
+                <input type="text" class="form-control mb-3" asp-for="Address" placeholder="Nhập địa chỉ">
+                <span asp-validation-for="Address" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Detail">Nội dung bệnh án</label>
+                <input type="text" class="form-control mb-3" asp-for="Detail" placeholder="Nhập nội dung">
+                <span asp-validation-for="Detail" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="DoctorName">Bác sĩ khám</label>
+                <input type="text" class="form-control mb-3" asp-for="DoctorName" placeholder="Nhập tên bác sĩ">
+                <span asp-validation-for="DoctorName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="NurseName">Y tá trực ca</label>
+                <input type="text" class="form-control mb-3" asp-for="NurseName" placeholder="Nhập tên y tá">
+                <span asp-validation-for="NurseName" class=" alert-danger"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
+        <a asp-controller="Nurse" asp-action="Index" class="btn btn-lg btn-warning p-2">Trở lại</a>
+    </form>
+
+</div>
+
+
+@*//for front end validations
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+*@

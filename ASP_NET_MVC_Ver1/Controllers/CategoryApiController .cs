@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Linq.Dynamic.Core;
 
+
 namespace ASP_NET_MVC_Ver1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChildrenApiController : ControllerBase
+    public class CategoryApiController : ControllerBase
     {
-
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _uid;
         bool isAdmin = false;
@@ -21,13 +21,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
         bool isParent = false;
         string idUser;
 
-        public ChildrenApiController(ApplicationDbContext context, UserManager<ApplicationUser> uid)
+        public CategoryApiController(ApplicationDbContext context, UserManager<ApplicationUser> uid)
         {
             _uid = uid;
             _context = context;
         }
-        [HttpGet]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+
+
         public IActionResult Index()
         {
             try
@@ -47,33 +47,27 @@ namespace ASP_NET_MVC_Ver1.Controllers
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
                 //var customerData = (from tempcustomer in _context.Childrens select tempcustomer);
-                var customerData = from tempcustomer in _context.Childrens
-                                   join usersTable in _uid.Users on tempcustomer.parent_id equals usersTable.Id into tempTable
+                var customerData = from tempcustomer in _context.Categories
+                                   join usersTable in _uid.Users on tempcustomer.CreateId equals usersTable.Id into tempTable
                                    from leftJoinData in tempTable.DefaultIfEmpty()
                                    select new
                                    {
                                        // Chọn các trường từ bảng Childrens và OtherTable
                                        tempcustomer.Id,
-                                       tempcustomer.FullName,
-                                       tempcustomer.Age,
-                                       tempcustomer.BirdthDate,
-                                       tempcustomer.parent_id,
+                                       tempcustomer.Title,
+                                       tempcustomer.Content,
+                                       //tempcustomer.Description,
                                        // Thêm các trường khác từ OtherTable
                                        leftJoinData.FirstName,
                                        leftJoinData.LastName
                                    };
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
-                    //customerData = customerData.OrderBy(tempcustomer => tempcustomer.GetType().GetProperty(sortColumn).GetValue(tempcustomer, null));
                     customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    customerData = customerData.Where(m => m.FullName.Contains(searchValue));
-                }
-                if (isParent & !isAdmin)
-                {
-                    customerData = customerData.Where(m => m.parent_id == idUser.ToString());
+                    customerData = customerData.Where(m => m.Title.Contains(searchValue) || m.Content.Contains(searchValue));
                 }
 
                 recordsTotal = customerData.Count();
@@ -89,17 +83,16 @@ namespace ASP_NET_MVC_Ver1.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
         [HttpDelete]
         [Route("DeleteEmp")]
         public IActionResult DeleteEmp(Guid id)
         {
-            var deleterecord = _context.Childrens.Find(id);
+            var deleterecord = _context.Categories.Find(id);
             if (deleterecord == null)
             {
                 return NotFound();
             }
-            _context.Childrens.Remove(deleterecord);
+            _context.Categories.Remove(deleterecord);
             _context.SaveChanges();
             return Ok();
         }
