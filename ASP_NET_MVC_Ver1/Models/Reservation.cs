@@ -11,35 +11,35 @@ namespace ASP_NET_MVC_Ver1.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [Display(Name = "Bác sĩ")]
+        [Display(Name = "Doctor Name")]
         public string doctor_id { get; set; }
         [Required]
-        [Display(Name = "Trẻ em")]
+        [Display(Name = "Child Name")]
         public string child_id { get; set; }
         [Required]
-        [Display(Name = "Phụ huynh")]
+        [Display(Name = "Parent Name")]
         public string parent_id { get; set; }
         [Required]
-        [Display(Name = "Khoa khám")]
+        [Display(Name = "Category")]
         public string category { get; set; }
         [Required]
         [Display(Name = "Tên hồ sơ")]
         public string r_title { get; set; }
         [Required]
-        [Display(Name = "Thông tin khám chữa bệnh")]
+        [Display(Name = "Title")]
         public string r_content { get; set; }
         public DateTime? create_date { get; set; }
         [Required]
-        [Display(Name = "Ngày đặt lịch")]
+        [Display(Name = "Create Date")]
         public DateTime? booking_date { get; set; }
-        [Display(Name = "Ca khám bệnh")]
+        [Display(Name = "Slot")]
         public int? slot { get; set; }
         [Required]
-        [Display(Name = "Tình trạng đặt lịch")]
+        [Display(Name = "Status Booking")]
         public StatusSending status { get; set; }
-        [Display(Name = "Thông tin mô tả")]
+        [Display(Name = "Desciption")]
         public string Desciption { get; set; }
-        [Display(Name = "Thông tin mô tả")]
+        [Display(Name = "Examination Status")]
         public StatusExamination examination_status { get; set; }
         [NotMapped]
         public int backup { get; set; }
