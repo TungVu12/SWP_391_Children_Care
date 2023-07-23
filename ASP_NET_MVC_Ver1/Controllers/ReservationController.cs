@@ -1,4 +1,5 @@
 ﻿using ASP_NET_MVC_Ver1.Areas.Identity.Data;
+using ASP_NET_MVC_Ver1.Common;
 using ASP_NET_MVC_Ver1.Enum;
 using ASP_NET_MVC_Ver1.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,7 +67,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int pageNumber)
         {
             List<Reservation> ReservationLst = _context.Reservations.ToList();
 
@@ -117,13 +119,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
                                 // Hoặc có thể tạo một thuộc tính mới trong Reservation để lưu trữ tên của Children
                             };
 
-            List<Reservation> updatedReservationLst = joinTable.ToList();
+            List<Reservation> datas = joinTable.ToList();
+            
 
+            return View(datas);
 
-
-            var result = new List<Reservation>();
-            result = updatedReservationLst.ToList();
-            return View(result);
+            //return View(reservations);
+            //return View(await PaginatedList<Reservation>.CreateAsync(reservations, pageNumber ?? 1, pageSize));
 
         }
 
@@ -241,7 +243,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public async Task<IActionResult> Approve(Guid? Id)
         {
             if (Id == null)
@@ -321,9 +323,14 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public IActionResult Approve(Reservation empobj)
         {
+            //if (empobj.slot == null)
+            //{
+            //    var slot = _context.Reservations.Find(empobj.Id);
+            //    empobj.slot = slot.slot;
+            //}
             if (ModelState.IsValid)
             {
                 _context.Reservations.Update(empobj);
@@ -337,7 +344,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Parent")]
+        [Authorize(Roles = "Admin, Parent")]
         public async Task<IActionResult> Edit(Guid? Id)
         {
             if (Id == null)
