@@ -14,6 +14,6 @@ namespace ASP_NET_MVC_Ver1.Models
         [Required]
         public string Title { get; set; }
         [Required]
-        public string Content { get; set; }
+        public string Description { get; set; }
     }
 }
