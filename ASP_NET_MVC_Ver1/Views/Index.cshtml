@@ -115,7 +115,7 @@
                                             </div>
                                         `;
 
-            //Khởi tạo hiển thị biểu đồ
+            // Khởi tạo và hiển thị các biểu đồ
             showMixedChart();
             showGroupedBarChart();
         }
@@ -126,12 +126,10 @@
                 "July", "August", "September", "October", "November", "December"
             ];
             return monthNames[monthNumber - 1];
-            //  Các month
-
         }
 
+
         function showMixedChart() {
-            //Hàm MixedChart
             var ctx = document.getElementById('columnLineChart').getContext('2d');
             var chartData = @Html.Raw(Json.Serialize(ViewBag.ChartData));
             var labels = chartData.map((_, index) => getEnglishMonthName(index + 1));
@@ -165,3 +163,53 @@
                 }
             });
         }
+
+        function showSlideShow() {
+            var swiper = new Swiper('.swiper-container', {
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        }
+        // Tạo css 
+        function showGroupedBarChart() {
+            var ctx = document.getElementById('groupedBarChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mục A', 'Mục B', 'Mục C', 'Mục D'],
+                    datasets: [{
+                        label: 'Dữ liệu 1',
+                        data: [30, 40, 20, 10],
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Dữ liệu 2',
+                        data: [20, 15, 25, 35],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        function showUsers() {
+            document.getElementById("content").innerHTML = `<h2>Người dùng</h2><p>Nội dung của trang người dùng...</p>`;
+        }
+
+        function showPatients() {
+            document.getElementById("content").innerHTML = `<h2>Bệnh nhân</h2><p>Nội dung của trang bệnh nhân...</p>`;
+        }
+        showDashboard();// Import Swiper library
+    </script>
+</body>
+</html>
+
