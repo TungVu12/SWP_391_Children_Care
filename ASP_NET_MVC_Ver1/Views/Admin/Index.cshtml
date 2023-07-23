@@ -1,79 +1,121 @@
-﻿@using ASP_NET_MVC_Ver1.Areas.Identity.Data;
+﻿@page
+@using ASP_NET_MVC_Ver1.Areas.Identity.Data;
 @model IEnumerable<ASP_NET_MVC_Ver1.Areas.Identity.Data.ApplicationUser>
-@{
-    ViewData["Title"] = "READ USER";
-}
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="node_modules/antd/dist/antd.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 @if (TempData["ResultOk"] != null)
 {
-    <h1 class="alert-success">@TempData["ResultOk"]</h1>
-}
-<div class="container shadow p-5">
-
-
-    <div class="col mb-3">
-        <a asp-controller="Admin" asp-action="Create" class="btn btn-lg btn-primary"><i class="bi bi-file-plus-fill"></i>Thêm mới tài khoản</a>
+    <div id="alert-div" class="alert alert-success position-fixed top-0 end-0 border border-success rounded-pill py-2 px-3" style="max-width: 450px;">
+        <span class="fw-bold" style="font-size: 16px;">@TempData["ResultOk"]</span>
+        <button type="button" class="btn-close float-start" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Họ và tên</th>
-                <th scope="col">Email</th>
-                <th scope="col">Điện thoại</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td width="20%">
-                        @item.FirstName @item.LastName
-                    </td>
-                    <td width="20%">
-                        @item.Email
-                    </td>
-                    <td width="25%">
-                        @item.PhoneNumber
-                    </td>
-                  @*  <td width="20%">
-                        @item.Address
-                    </td>*@
-                    <td>
-                        <div role="group" class="w-60 btn-group">
-                            <a asp-controller="Admin" asp-action="Update" asp-route-id="@item.Id" class=" btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Sửa</a>&nbsp;
-                            <a asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i>Xoá</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-@*<h1 class="bg-info text-white">All Users</h1>
-<a asp-action="Create" class="btn btn-secondary">Create a User</a>
+    <script>
+        // Get the alert element
+        var alertDiv = document.getElementById("alert-div");
 
-<table class="table table-sm table-bordered">
-    <tr><th>Họ và tên</th><th>Email</th><th>Điện thoại</th></tr>
-    @foreach (ApplicationUser user in Model)
-    {
-        <tr>
-            <td>@user.FirstName @user.LastName </td>
-            <td>@user.Email</td>
-            <td>@user.PhoneNumber</td>
-                 <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
-                        Update
-                    </a>
-                </td>
-                     <td>
-                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-        </tr>
+        // Wait for 5 seconds and then hide the alert
+        setTimeout(function () {
+            alertDiv.style.display = "none";
+        }, 3000);
+    </script>
+}
+<style>
+    .btn-custom-sea {
+        background-color: #0077be; /* Thay đổi mã màu tại đây */
+        background-image: linear-gradient(#0077be, #00bfff); /* Thêm hiệu ứng gradient */
+        color: #fff; /* Thay đổi màu chữ */
+        border-color: #0077be; /* Thay đổi màu đường viền */
     }
-</table>*@
+    /* styles.css */
+    .ant-table {
+        width: 100%;
+    }
+
+        .ant-table th,
+        .ant-table td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .ant-table thead th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+    .ant-table-bordered th,
+    .ant-table-bordered td {
+        border: 1px solid #f0f0f0;
+    }
+
+    .ant-table-striped tbody > tr:nth-child(odd) {
+        background-color: #fafafa;
+    }
+
+    .ant-table-responsive {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+        .custom-table thead th {
+            background-color: #0079BF;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .custom-table tbody td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #D6EAF8;
+        }
+
+    .table td {
+        vertical-align: middle; /* Căn giữa dọc các ô dữ liệu */
+    }
+
+</style>
+<div class="col m-3">
+    <a asp-controller="Admin" asp-action="Create" class="btn btn-custom-sea btn-outline btn-hover"><i class="bi bi-plus-square bi-4x"></i> Add account</a>
+</div>
+<div class="container">
+    <br />
+    <div class="table-responsive" style="width:90%; margin:0 auto;">
+        <table id="customerDatatable" class="ant-table ant-table-bordered ant-table-striped ant-table-responsive custom-table" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>STT</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div> 
+@section Scripts
+    {
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/admindatatable.js"></script>
+}

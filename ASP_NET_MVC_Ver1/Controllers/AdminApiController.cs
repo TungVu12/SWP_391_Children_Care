@@ -26,6 +26,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         {
             try
             {
+                // demo
                 var draw = Request.Query["draw"].FirstOrDefault();
                 var start = Request.Query["start"].FirstOrDefault();
                 var length = Request.Query["length"].FirstOrDefault();
