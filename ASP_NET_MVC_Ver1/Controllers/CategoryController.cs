@@ -18,13 +18,13 @@ namespace ASP_NET_MVC_Ver1.Controllers
             _context = context;
             _userManager = userManager;
         }
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager,Doctor,Parent")]
         public IActionResult Index()
         {
             IEnumerable<Category> objCatlist = _context.Categories;
             return View(objCatlist);
         }
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             Category category = new Category();
@@ -52,7 +52,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create(Category empobj)
         {
             idUser = _userManager.GetUserId(HttpContext.User);
@@ -68,7 +68,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
             return View(empobj);
         }
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Edit(Guid Id)
         {
             if (Id == null)
@@ -86,7 +86,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Edit(Category empobj)
         {
             if (ModelState.IsValid)
@@ -115,7 +115,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent,Children")]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult DeleteEmp(Guid Id)
         {
             var deleterecord = _context.Categories.Find(Id);

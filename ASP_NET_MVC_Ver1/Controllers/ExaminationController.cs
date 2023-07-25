@@ -150,7 +150,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public IActionResult Create(Examination empobj)
         {
             if (ModelState.IsValid)
@@ -251,7 +251,7 @@ namespace ASP_NET_MVC_Ver1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manager,Doctor,Nurse,Parent")]
+        [Authorize(Roles = "Admin,Manager,Doctor")]
         public IActionResult Edit(Examination empobj)
         {
             if (ModelState.IsValid)
