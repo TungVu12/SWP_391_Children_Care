@@ -90,9 +90,9 @@
                 <span asp-validation-for="Desciption" class=" alert-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                @Html.HiddenFor(model => model.RegistrationDate)
+                @*@Html.HiddenFor(model => model.RegistrationDate)*@
                 @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-4" })
-                <input type="date" class="form-control datepicker" asp-for="RegistrationDate" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}" disabled=true>
+                <input type="date" class="form-control datepicker" asp-for="RegistrationDate" id="birthDateInput" min="@minDate" asp-format="{0:yyyy-MM-dd}">
                 <span asp-validation-for="RegistrationDate" class=" alert-danger"></span>
             </div>
             <div class="text-center mt-3">
